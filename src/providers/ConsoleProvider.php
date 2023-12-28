@@ -20,7 +20,7 @@ namespace core\providers;
 use core\bootstrap\foundation\Kernel;
 use core\components\Collection;
 use core\components\ServiceProvider;
-use core\console\Console;
+use console\Console;
 
 /**
  * ConsoleProvider class

@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Slim 4 Base
+ * @package     Core
  *
- * @subpackage  Bootstrap
+ * @subpackage  app
  *
  * @author      Sebastian Costiug, sebastian@overbyte.dev
  * @copyright   2019-2023 Sebastian Costiug <https://www.overbyte.dev>

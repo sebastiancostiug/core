@@ -17,10 +17,10 @@
 
 namespace core\providers;
 
-use core\bootstrap\foundation\Kernel;
-use core\components\Collection;
-use core\components\ServiceProvider;
+use common\Collection;
+use core\foundation\Kernel;
 use console\Console;
+use core\components\ServiceProvider;
 
 /**
  * ConsoleProvider class

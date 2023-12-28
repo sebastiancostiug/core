@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Slim 4 Base
+ * @package     Core
  *
- * @subpackage  <Middleware after request is handled>
+ * @subpackage  Middleware
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2023 Sebastian Costiug

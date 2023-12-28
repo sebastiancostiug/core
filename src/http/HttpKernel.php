@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Slim 4 Base
+ * @package     Core
  *
- * @subpackage  Core - kernel
+ * @subpackage  Http Kernel
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2023 Sebastian Costiug
@@ -16,12 +16,12 @@
 
 namespace core\http;
 
-use core\bootstrap\foundation\Kernel;
-use core\bootstrap\foundation\bootstrappers\Debug;
-use core\bootstrap\foundation\bootstrappers\EnvironmentDetector;
-use core\bootstrap\foundation\bootstrappers\EnvironmentVariables;
-use core\bootstrap\foundation\bootstrappers\Middleware;
-use core\bootstrap\foundation\bootstrappers\ServiceProviders;
+use core\foundation\Kernel;
+use core\bootstrap\Debug;
+use core\bootstrap\EnvironmentDetector;
+use core\bootstrap\EnvironmentVariables;
+use core\bootstrap\Middleware;
+use core\bootstrap\ServiceProviders;
 
 /**
  * HttpKernel class

@@ -1,14 +1,14 @@
 <?php
 /**
- * @package     Slim 4 Base
+ * @package     Core
  *
- * @subpackage  Core - routing
+ * @subpackage  Http routing
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2023 Sebastian Costiug
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
- * @category    config
+ * @category    routing
  * @see         https://www.slimframework.com/docs/v4/
  *
  * @since       2022.11.10

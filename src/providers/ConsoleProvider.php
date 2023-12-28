@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @package     slim-base
+ * @package     Core
  *
  * @subpackage  ConsoleProvider
  *
@@ -9,8 +9,7 @@
  * @copyright   2019-2023 Sebastian Costiug
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
- * @category    slim-base
- * @see
+ * @category    providers
  *
  * @since       2023-12-02
  *

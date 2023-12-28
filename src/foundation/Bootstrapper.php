@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Slim 4 Base
+ * @package     Core
  *
  * @subpackage  Bootstrapper
  *
@@ -8,16 +8,16 @@
  * @copyright   2019-2023 Sebastian Costiug
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
- * @category    bootstrapper
+ * @category    foundation
  * @see         https://www.slimframework.com/docs/v4/
  *
  * @since       2023-10-17
  */
 
-namespace core\bootstrap\foundation;
+namespace core\foundation;
 
-use core\bootstrap\foundation\App;
-use core\common\Collection;
+use core\foundation\App;
+use seb\common\Collection;
 
 /**
  * Bootstrapper class

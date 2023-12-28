@@ -1,25 +1,24 @@
 <?php
 /**
  *
- * @package     slim-api-skeleton
+ * @package     Core
  *
- * @subpackage  environmentDetector
+ * @subpackage  Environment Detector bootstrapper
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2023 Sebastian Costiug
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
- * @category    slim-api-skeleton
- * @see
+ * @category    bootstrapper
  *
  * @since       2023-12-02
  *
  */
 
-namespace core\bootstrap\foundation\bootstrappers;
+namespace core\bootstrap;
 
-use core\bootstrap\foundation\Bootstrapper;
-use core\bootstrap\foundation\Kernel;
+use core\foundation\Bootstrapper;
+use core\foundation\Kernel;
 use core\http\HttpKernel;
 
 /**

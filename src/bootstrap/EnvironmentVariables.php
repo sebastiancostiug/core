@@ -1,22 +1,21 @@
 <?php
 /**
- * @package     Slim 4 Base
+ * @package     Core
  *
- * @subpackage  Core - bootstrappers
+ * @subpackage  Environment Variables bootstrapper
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2023 Sebastian Costiug
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
  * @category    bootstrapper
- * @see         https://www.slimframework.com/docs/v4/
  *
  * @since       2023-10-17
  */
 
-namespace core\bootstrap\foundation\bootstrappers;
+namespace core\bootstrap;
 
-use core\bootstrap\foundation\Bootstrapper;
+use core\foundation\Bootstrapper;
 
 /**
  * EnvironmentVariables class

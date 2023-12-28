@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Slim 4 Base
+ * @package     Sore
  *
- * @subpackage  Core - http
+ * @subpackage  HTTP controllers
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2023 Sebastian Costiug

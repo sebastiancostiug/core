@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Slim 4 Base
+ * @package     Core
  *
  * @subpackage  Kernel
  *
@@ -14,9 +14,9 @@
  * @since       2023-10-17
  */
 
-namespace core\bootstrap\foundation;
+namespace core\foundation;
 
-use core\bootstrap\foundation\App;
+use core\foundation\App;
 
 /**
  * Kernel class

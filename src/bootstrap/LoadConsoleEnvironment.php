@@ -1,24 +1,23 @@
 <?php
 /**
  *
- * @package     slim-base
+ * @package     Core
  *
- * @subpackage  LoadConsoleEnvironment
+ * @subpackage  Load Console Environment bootstrapper
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2023 Sebastian Costiug
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
- * @category    slim-base
- * @see
+ * @category    bootstrapper
  *
  * @since       2023-12-02
  *
  */
 
-namespace core\bootstrap\foundation\bootstrappers;
+namespace core\bootstrap;
 
-use core\bootstrap\foundation\Bootstrapper;
+use core\foundation\Bootstrapper;
 
 /**
  * LoadConsoleEnvironment class

@@ -17,7 +17,7 @@ namespace core\components;
 
 use Psr\Container\ContainerInterface;
 use core\foundation\App;
-use seb\common\Collection;
+use common\Collection;
 
 /**
  * Service Provider class

@@ -31,12 +31,12 @@ class LoadConsoleEnvironment extends Bootstrapper
      */
     public function beforeBoot()
     {
-        if (!class_exists('\seb\console\Console')) {
+        if (!class_exists('\console\Console')) {
             return;
         }
-        $console = new \seb\console\Console();
+        $console = new \console\Console();
 
-        $this->app->bind(\seb\console\Console::class, fn() => $console);
+        $this->app->bind(\console\Console::class, fn() => $console);
     }
 
     /**

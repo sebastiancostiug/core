@@ -17,7 +17,7 @@
 namespace core\foundation;
 
 use core\foundation\App;
-use seb\common\Collection;
+use common\Collection;
 
 /**
  * Bootstrapper class

@@ -15,7 +15,7 @@
  */
 
 // Autoload global dependencies and allow for auto-loading local dependencies via use
-require_once 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+require_once dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . 'autoload.php';
 
 // Timezone
 date_default_timezone_set(config('app.timezone'));

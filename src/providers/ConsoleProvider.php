@@ -16,12 +16,12 @@
  *
  */
 
-namespace seb\providers;
+namespace core\providers;
 
-use seb\bootstrap\foundation\Kernel;
-use seb\components\Collection;
-use seb\components\ServiceProvider;
-use seb\console\Console;
+use core\bootstrap\foundation\Kernel;
+use core\components\Collection;
+use core\components\ServiceProvider;
+use core\console\Console;
 
 /**
  * ConsoleProvider class

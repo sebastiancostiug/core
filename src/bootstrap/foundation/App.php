@@ -16,7 +16,7 @@
  *
  */
 
-namespace seb\bootstrap\foundation;
+namespace core\bootstrap\foundation;
 
 /**
  * Class App

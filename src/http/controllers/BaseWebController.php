@@ -14,7 +14,7 @@
  * @since       2023.10.15
  */
 
-namespace seb\http\controllers;
+namespace core\http\controllers;
 
 use Nyholm\Psr7\Response;
 use Nyholm\Psr7\ServerRequest as Request;

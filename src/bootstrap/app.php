@@ -20,8 +20,8 @@ require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECT
 // Timezone
 date_default_timezone_set(config('app.timezone'));
 
-use seb\bootstrap\foundation\AppFactory as App;
-use seb\http\HttpKernel;
+use core\bootstrap\foundation\AppFactory as App;
+use core\http\HttpKernel;
 
 if (dev_env()) {
     // Development

@@ -14,7 +14,7 @@
  * @since       2022.11.10
  */
 
-namespace seb\core\middleware;
+namespace core\core\middleware;
 
 use Nyholm\Psr7\ServerRequest as Request;
 use Nyholm\Psr7\Response;

@@ -1,6 +1,6 @@
 <?php
 
-namespace seb\http;
+namespace core\http;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;

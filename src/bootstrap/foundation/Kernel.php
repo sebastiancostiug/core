@@ -14,9 +14,9 @@
  * @since       2023-10-17
  */
 
-namespace seb\bootstrap\foundation;
+namespace core\bootstrap\foundation;
 
-use seb\bootstrap\foundation\App;
+use core\bootstrap\foundation\App;
 
 /**
  * Kernel class

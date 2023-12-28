@@ -14,11 +14,11 @@
  * @since       2022.11.10
  */
 
-namespace seb\providers;
+namespace core\providers;
 
-use seb\components\ServiceProvider;
+use core\components\ServiceProvider;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use seb\http\View;
+use core\http\View;
 
 /**
  * Service Provider class

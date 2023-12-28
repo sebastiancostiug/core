@@ -16,7 +16,7 @@
  *
  */
 
-namespace seb\bootstrap\foundation;
+namespace core\bootstrap\foundation;
 
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Interfaces\MiddlewareDispatcherInterface;

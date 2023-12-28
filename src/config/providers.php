@@ -14,8 +14,8 @@
  * @since       2023.01.23
  */
 
-use seb\providers\ConsoleProvider;
-use seb\providers\ViewProvider;
+use core\providers\ConsoleProvider;
+use core\providers\ViewProvider;
 
 return [
     'web' => [

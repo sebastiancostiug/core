@@ -16,9 +16,9 @@
  *
  */
 
-namespace seb\bootstrap\foundation\bootstrappers;
+namespace core\bootstrap\foundation\bootstrappers;
 
-use seb\bootstrap\foundation\Bootstrapper;
+use core\bootstrap\foundation\Bootstrapper;
 
 /**
  * LoadConsoleEnvironment class

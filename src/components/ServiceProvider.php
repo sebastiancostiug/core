@@ -14,11 +14,11 @@
  * @since       2022.11.10
  */
 
-namespace seb\components;
+namespace core\components;
 
 use Psr\Container\ContainerInterface;
-use seb\bootstrap\foundation\App;
-use seb\common\Collection;
+use core\bootstrap\foundation\App;
+use core\common\Collection;
 
 /**
  * Service Provider class

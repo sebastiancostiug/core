@@ -14,9 +14,9 @@
  * @since       2023-10-17
  */
 
-namespace seb\bootstrap\foundation\bootstrappers;
+namespace core\bootstrap\foundation\bootstrappers;
 
-use seb\bootstrap\foundation\Bootstrapper;
+use core\bootstrap\foundation\Bootstrapper;
 
 /**
  * EnvironmentVariables class

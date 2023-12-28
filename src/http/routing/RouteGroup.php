@@ -14,9 +14,9 @@
  * @since       2023-10-17
  */
 
-namespace seb\http\routing;
+namespace core\http\routing;
 
-use seb\bootstrap\foundation\App;
+use core\bootstrap\foundation\App;
 use Slim\Routing\RouteCollectorProxy;
 
 /**

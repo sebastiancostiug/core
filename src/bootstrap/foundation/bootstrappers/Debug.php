@@ -14,10 +14,10 @@
  * @since       2023-10-17
  */
 
-namespace seb\bootstrap\foundation\bootstrappers;
+namespace core\bootstrap\foundation\bootstrappers;
 
-use seb\bootstrap\foundation\Bootstrapper;
-use seb\core\middleware\ApiDebugMiddleware;
+use core\bootstrap\foundation\Bootstrapper;
+use core\core\middleware\ApiDebugMiddleware;
 
 /**
  * Debug class

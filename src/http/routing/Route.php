@@ -14,7 +14,7 @@
  * @since       2022.11.10
  */
 
-namespace seb\http\routing;
+namespace core\http\routing;
 
 /**
  * Route class

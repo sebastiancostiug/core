@@ -14,14 +14,14 @@
  * @since       2023-10-17
  */
 
-namespace seb\http;
+namespace core\http;
 
-use seb\bootstrap\foundation\Kernel;
-use seb\bootstrap\foundation\bootstrappers\Debug;
-use seb\bootstrap\foundation\bootstrappers\EnvironmentDetector;
-use seb\bootstrap\foundation\bootstrappers\EnvironmentVariables;
-use seb\bootstrap\foundation\bootstrappers\Middleware;
-use seb\bootstrap\foundation\bootstrappers\ServiceProviders;
+use core\bootstrap\foundation\Kernel;
+use core\bootstrap\foundation\bootstrappers\Debug;
+use core\bootstrap\foundation\bootstrappers\EnvironmentDetector;
+use core\bootstrap\foundation\bootstrappers\EnvironmentVariables;
+use core\bootstrap\foundation\bootstrappers\Middleware;
+use core\bootstrap\foundation\bootstrappers\ServiceProviders;
 
 /**
  * HttpKernel class

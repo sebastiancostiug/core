@@ -1,0 +1,41 @@
+{
+    "name": "sebastiancostiug/core",
+    "description": "The application core for all projects.",
+    "authors": [
+        {
+            "name": "Sebastian Costiug",
+            "email": "sebastian@overbyte.dev",
+            "homepage": "https://overbyte.dev"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "version": "0.0.1",
+    "license": "BSD-3-Clause",
+    "type": "library",
+    "keywords": [
+        "core",
+        "application",
+        "php"
+    ],
+    "require": {
+        "php": "^8.2",
+        "slim/slim": "^4.12",
+        "nyholm/psr7": "^1.8",
+        "nyholm/psr7-server": "^1.0",
+        "php-di/slim-bridge": "^3.4",
+        "slim/php-view": "^3.2",
+        "sebastiancostiug/helpers": "dev-master",
+        "sebastiancostiug/common": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/sebastiancostiug/helpers.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/sebastiancostiug/common.git"
+        }
+    ]
+}

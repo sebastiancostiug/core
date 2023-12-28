@@ -29,7 +29,7 @@ use core\http\HttpKernel;
 class EnvironmentDetector extends Bootstrapper
 {
     const HTTP_ENV = HttpKernel::class;
-    const CONSOLE_ENV = class_exists('\console\ConsoleKernel') ? \console\ConsoleKernel::class : null;
+    const CONSOLE_ENV = \console\ConsoleKernel::class;
 
     /**
      * Boot the environment detector.

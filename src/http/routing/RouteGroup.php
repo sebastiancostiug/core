@@ -47,11 +47,11 @@ class RouteGroup
     /**
      * __construct
      *
-     * @param App $app App
+     * @param mixed $app App
      *
      * @return void
      */
-    public function __construct(App &$app)
+    public function __construct(mixed &$app)
     {
         $this->app = $app;
     }

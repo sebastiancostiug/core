@@ -14,10 +14,12 @@
  */
 
 use core\providers\ConsoleProvider;
+use core\providers\RoutesProvider;
 use core\providers\ViewProvider;
 
 return [
     'web' => [
+        RoutesProvider::class,
         ViewProvider::class,
     ],
     'console' => [

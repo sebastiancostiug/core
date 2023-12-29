@@ -19,7 +19,6 @@ namespace core\providers;
 
 use common\Collection;
 use core\foundation\Kernel;
-use console\Console;
 use core\components\ServiceProvider;
 
 /**
@@ -44,16 +43,18 @@ class ConsoleProvider extends ServiceProvider
      */
     public function boot()
     {
-        require routes_path('console.php');
+        if (class_exists(\console\Console::class)) {
+            require routes_path('console.php');
 
-        $routesCommands = Console::commands();
+            $routesCommands = \console\Console::commands();
 
-        $kernel = $this->app->resolve(Kernel::class);
-        $kernelCommands = new Collection($kernel->commands);
-        $kernelCommands = $kernelCommands->map(fn($command) => new $command());
+            $kernel = $this->app->resolve(Kernel::class);
+            $kernelCommands = new Collection($kernel->commands);
+            $kernelCommands = $kernelCommands->map(fn($command) => new $command());
 
-        $commands = $routesCommands->merge($kernelCommands);
+            $commands = $routesCommands->merge($kernelCommands);
 
-        $commands->map(fn($command) => Console::console()->add($command));
+            $commands->map(fn($command) => \console\Console::console()->add($command));
+        }
     }
 }

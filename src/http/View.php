@@ -52,14 +52,16 @@ class View
     /**
      * invoke()
      *
-     * @param string $template Template
-     * @param array  $with     Template parameters
+     * @param string $template Template name to render
+     * @param array  $with     Template parameters to pass
+     * @param string $layout   Layout template name to render
      *
      * @return Response
      */
-    public function __invoke($template = '', array $with = []) : Response
+    public function __invoke($template = '', array $with = [], $layout = 'main.php') : Response
     {
-        return $this->view->render($this->response, $template, $with);
-        ;
+        $this->view->setLayout(views_path('layouts') . DIRECTORY_SEPARATOR . $layout);
+
+        return $this->view->render($this->response, views_path($template), $with);
     }
 }

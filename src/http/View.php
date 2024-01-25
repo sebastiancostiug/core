@@ -62,6 +62,6 @@ class View
     {
         $this->view->setLayout(views_path('layouts') . DIRECTORY_SEPARATOR . $layout);
 
-        return $this->view->render($this->response, views_path($template), $with);
+        return $this->view->render($this->response, views_path($template . '.php'), $with);
     }
 }

@@ -18,6 +18,7 @@
 
 namespace core\http\middleware;
 
+use core\http\RequestInput;
 use core\http\routing\Redirect;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\ServerRequest as Request;
@@ -42,6 +43,9 @@ class RouteContextMiddleware
         throw_when(empty($route), new \Exception('Route not found'));
 
         app()->bind(Redirect::class, fn(Psr17Factory $factory) => new Redirect($factory));
+
+        $input = new RequestInput($request, $route);
+        app()->bind(RequestInput::class, $input);
 
         return $handler->handle($request);
     }

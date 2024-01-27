@@ -42,7 +42,7 @@ class Redirect
      */
     public function __construct(Psr17Factory $factory)
     {
-        $this->response = $factory->createResponse(302);
+        $this->response = $factory->createResponse(302, 'Redirect');
     }
 
     /**

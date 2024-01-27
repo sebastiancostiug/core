@@ -35,6 +35,8 @@ if (dev_env()) {
 // Create the application instance.
 $app = \core\foundation\AppFactory::create();
 
+$_SERVER['app'] = &$app;
+
 $http_kernel = new core\http\HttpKernel($app);
 $app->bind(core\http\HttpKernel::class, $http_kernel);
 
@@ -42,8 +44,6 @@ if (class_exists('\console\ConsoleKernel')) {
     $console_kernel = new \console\ConsoleKernel($app);
     $app->bind(\console\ConsoleKernel::class, $console_kernel);
 }
-
-$_SERVER['app'] = &$app;
 
 if (!function_exists('app')) {
     /**

@@ -16,9 +16,6 @@
 
 namespace core\http\controllers;
 
-use Nyholm\Psr7\Response;
-use Nyholm\Psr7\ServerRequest as Request;
-
 /**
  * BaseController class
  */

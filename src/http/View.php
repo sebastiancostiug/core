@@ -60,7 +60,9 @@ class View
      */
     public function __invoke($template = '', array $with = [], $layout = 'main') : Response
     {
-        $this->view->setLayout(views_path('layouts') . DIRECTORY_SEPARATOR . $layout . '.php');
+        if ($layout) {
+            $this->view->setLayout(views_path('layouts') . DIRECTORY_SEPARATOR . $layout . '.php');
+        }
 
         return $this->view->render($this->response, views_path($template . '.php'), $with);
     }

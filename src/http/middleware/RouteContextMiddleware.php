@@ -32,8 +32,9 @@ class RouteContextMiddleware
      * __invoke()
      *
      * @param  Request $request Request
-     * @param  mixed   $handler
-     * @return void
+     * @param  mixed   $handler Handler
+     *
+     * @return mixed
      */
     public function __invoke(Request $request, mixed $handler)
     {

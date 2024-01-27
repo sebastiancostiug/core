@@ -58,9 +58,9 @@ class View
      *
      * @return Response
      */
-    public function __invoke($template = '', array $with = [], $layout = 'main.php') : Response
+    public function __invoke($template = '', array $with = [], $layout = 'main') : Response
     {
-        $this->view->setLayout(views_path('layouts') . DIRECTORY_SEPARATOR . $layout);
+        $this->view->setLayout(views_path('layouts') . DIRECTORY_SEPARATOR . $layout . '.php');
 
         return $this->view->render($this->response, views_path($template . '.php'), $with);
     }

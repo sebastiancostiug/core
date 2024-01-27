@@ -71,18 +71,6 @@ class App extends \Slim\App
     }
 
     /**
-     * Bind a value or a closure to the container.
-     *
-     * @param mixed ...$parameters The parameters to bind to the container.
-     *
-     * @return mixed The bound value or closure.
-     */
-    public function bind(...$parameters)
-    {
-        return $this->getContainer()->set(...$parameters);
-    }
-
-    /**
      * Create an instance of a class from the container.
      *
      * @param  ...$parameters The parameters to create the instance.
@@ -92,6 +80,18 @@ class App extends \Slim\App
     public function make(...$parameters)
     {
         return $this->getContainer()->make(...$parameters);
+    }
+
+    /**
+     * Bind a value or a closure to the container.
+     *
+     * @param mixed ...$parameters The parameters to bind to the container.
+     *
+     * @return mixed The bound value or closure.
+     */
+    public function bind(...$parameters)
+    {
+        return $this->getContainer()->set(...$parameters);
     }
 
     /**

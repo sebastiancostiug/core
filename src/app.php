@@ -43,4 +43,20 @@ if (class_exists('\console\ConsoleKernel')) {
     $app->bind(\console\ConsoleKernel::class, $console_kernel);
 }
 
+$_SERVER['app'] = &$app;
+
+if (!function_exists('app')) {
+    /**
+     * Get the application instance.
+     *
+     * @return mixed|\core\foundation\Application
+     */
+    function app()
+    {
+        return $_SERVER['app'];
+    }
+}
+
+$app->addRoutingMiddleware();
+
 return $app;

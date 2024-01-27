@@ -30,9 +30,9 @@ class Middleware extends Bootstrapper
      */
     public function boot()
     {
-        $kernel = $this->app->getContainer()->get(Kernel::class);
+        $kernel = app()->resolve(Kernel::class);
 
-        $this->app->getContainer()->set('middleware', fn() => [
+        app()->bind('middleware', fn() => [
             'global' => $kernel->middleware,
             'api'    => $kernel->middlewareGroups['api'],
             'web'    => $kernel->middlewareGroups['web'],

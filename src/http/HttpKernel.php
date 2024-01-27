@@ -22,6 +22,8 @@ use core\bootstrap\EnvironmentDetector;
 use core\bootstrap\EnvironmentVariables;
 use core\bootstrap\Middleware;
 use core\bootstrap\ServiceProviders;
+use core\http\middleware\ApiDebugMiddleware;
+use core\http\middleware\RouteContextMiddleware;
 
 /**
  * HttpKernel class
@@ -37,8 +39,12 @@ class HttpKernel extends Kernel
      * @var array $middlewareGroups Route group middleware
      */
     public array $middlewareGroups = [
-        'api' => [],
-        'web' => [],
+        'api' => [
+            ApiDebugMiddleware::class,
+        ],
+        'web' => [
+            RouteContextMiddleware::class,
+        ],
     ];
 
     /**

@@ -14,6 +14,9 @@
  * @since       2023.10.14
  */
 
+//start session
+session_start();
+
 // Autoload global dependencies and allow for auto-loading local dependencies via use
 require_once dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . 'autoload.php';
 

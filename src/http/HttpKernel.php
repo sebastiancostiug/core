@@ -34,7 +34,9 @@ class HttpKernel extends Kernel
     /**
      * @var array $middleware Global middleware
      */
-    public array $middleware = [];
+    public array $middleware = [
+        RouteContextMiddleware::class,
+    ];
 
     /**
      * @var array $middlewareGroups Route group middleware
@@ -44,7 +46,6 @@ class HttpKernel extends Kernel
             ApiDebugMiddleware::class,
         ],
         'web' => [
-            RouteContextMiddleware::class,
         ],
     ];
 

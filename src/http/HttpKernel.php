@@ -20,6 +20,7 @@ use core\foundation\Kernel;
 use core\bootstrap\Debug;
 use core\bootstrap\EnvironmentDetector;
 use core\bootstrap\EnvironmentVariables;
+use core\bootstrap\LoadAliases;
 use core\bootstrap\Middleware;
 use core\bootstrap\ServiceProviders;
 use core\http\middleware\ApiDebugMiddleware;
@@ -54,6 +55,7 @@ class HttpKernel extends Kernel
         EnvironmentDetector::class,
         EnvironmentVariables::class,
         Debug::class,
+        LoadAliases::class,
         Middleware::class,
         ServiceProviders::class,
     ];

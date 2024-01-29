@@ -15,6 +15,7 @@
 
 namespace core\bootstrap;
 
+use common\Collection;
 use core\foundation\Bootstrapper;
 use core\foundation\Kernel;
 
@@ -31,6 +32,17 @@ class Middleware extends Bootstrapper
     public function boot()
     {
         $kernel = app()->resolve(Kernel::class);
+
+        $middleware = [
+            ...$kernel->middleware,
+            ...$kernel->middlewareGroups['api'],
+            ...$kernel->middlewareGroups['web'],
+        ];
+
+        $middlewareCollection = new Collection($middleware);
+        $middlewareCollection
+            ->filter(fn($middleware) => class_exists($middleware))
+            ->each(fn($middleware) => app()->bind($middleware, new $middleware));
 
         app()->bind('middleware', fn() => [
             'global' => $kernel->middleware,

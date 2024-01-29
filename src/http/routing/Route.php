@@ -59,7 +59,7 @@ class Route
 
         self::validation($route, $verb, $action);
 
-        is_callable($action) ? $app->$verb($route, $action) : $app->$verb($route, self::resolveViaController($type, $action));
+        return is_callable($action) ? $app->$verb($route, $action) : $app->$verb($route, self::resolveViaController($type, $action));
     }
 
     /**

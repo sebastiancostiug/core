@@ -22,6 +22,7 @@ use core\http\RequestInput;
 use core\http\routing\Redirect;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\ServerRequest as Request;
+use Psr\Http\Server\RequestHandlerInterface as Handler;
 
 /**
  * RouteContextMiddleware class
@@ -32,11 +33,11 @@ class RouteContextMiddleware
      * __invoke()
      *
      * @param  Request $request Request
-     * @param  mixed   $handler Handler
+     * @param  Handler $handler Handler
      *
      * @return mixed
      */
-    public function __invoke(Request $request, mixed $handler)
+    public function __invoke(Request $request, Handler $handler)
     {
         $routeContext = \Slim\Routing\RouteContext::fromRequest($request);
         $route = $routeContext->getRoute();

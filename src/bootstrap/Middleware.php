@@ -41,8 +41,8 @@ class Middleware extends Bootstrapper
 
         $middlewareCollection = new Collection($middleware);
         $middlewareCollection
-            ->filter(fn($middleware) => class_exists($middleware))
-            ->each(fn($middleware) => app()->bind($middleware, new $middleware));
+            ->filter(fn($guard) => class_exists($guard))
+            ->each(fn($guard) => app()->bind($guard, new $guard));
 
         app()->bind('middleware', fn() => [
             'global' => $kernel->middleware,

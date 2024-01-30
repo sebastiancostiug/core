@@ -14,15 +14,18 @@
  */
 
 use core\providers\ConsoleProvider;
+use core\providers\FilesystemProvider;
 use core\providers\RoutesProvider;
 use core\providers\ViewProvider;
 
 return [
     'web' => [
+        FilesystemProvider::class,
         RoutesProvider::class,
         ViewProvider::class,
     ],
     'console' => [
+        FilesystemProvider::class,
         ConsoleProvider::class,
     ],
 ];

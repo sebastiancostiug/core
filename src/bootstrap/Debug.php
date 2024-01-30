@@ -15,8 +15,8 @@
 
 namespace core\bootstrap;
 
-use core\core\middleware\ApiDebugMiddleware;
 use core\foundation\Bootstrapper;
+use core\http\middleware\ApiDebugMiddleware;
 
 /**
  * Debug class

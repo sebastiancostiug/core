@@ -15,7 +15,7 @@
 
 namespace core\providers;
 
-use core\components\Filesystem;
+use common\Filesystem;
 use core\components\ServiceProvider;
 
 /**

@@ -14,9 +14,7 @@
  * @since       2023.10.14
  */
 
-use common\Filesystem;
-
 return [
-    'Filesystem' => Filesystem::class,
+    'Filesystem' => common\Filesystem::class,
     'Collection' => common\Collection::class,
 ];

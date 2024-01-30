@@ -33,8 +33,6 @@ class Filesystem
     /**
      * Class FileSystem
      *
-     * @param string $basePath The base path for the file system.
-     *
      * Represents a file system component.
      */
     public function __construct()

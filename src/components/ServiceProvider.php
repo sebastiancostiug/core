@@ -43,6 +43,10 @@ abstract class ServiceProvider
     {
         $this->app = $app;
         $this->container = $this->app->getContainer();
+
+        if (method_exists($this, 'beforeRegister')) {
+            $this->beforeRegister();
+        }
     }
 
     /**

@@ -33,10 +33,24 @@ class Middleware extends Bootstrapper
     {
         $kernel = app()->resolve(Kernel::class);
 
-        $middleware = [
+        $applicationMiddleware = config('middleware');
+
+        $globalMiddleware = [
             ...$kernel->middleware,
+            ...$applicationMiddleware['global'],
+        ];
+        $apiMiddleware = [
             ...$kernel->middlewareGroups['api'],
+            ...$applicationMiddleware['api'],
+        ];
+        $webMiddleware = [
             ...$kernel->middlewareGroups['web'],
+            ...$applicationMiddleware['web'],
+        ];
+        $middleware = [
+            ...$globalMiddleware,
+            ...$apiMiddleware,
+            ...$webMiddleware,
         ];
 
         $middlewareCollection = new Collection($middleware);
@@ -45,9 +59,9 @@ class Middleware extends Bootstrapper
             ->each(fn($guard) => app()->bind($guard, new $guard));
 
         app()->bind('middleware', fn() => [
-            'global' => $kernel->middleware,
-            'api'    => $kernel->middlewareGroups['api'],
-            'web'    => $kernel->middlewareGroups['web'],
+            'global' => $globalMiddleware,
+            'api'    => $apiMiddleware,
+            'web'    => $globalMiddleware,
         ]);
     }
 }

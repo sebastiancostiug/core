@@ -23,7 +23,6 @@ use core\bootstrap\EnvironmentVariables;
 use core\bootstrap\LoadAliases;
 use core\bootstrap\Middleware;
 use core\bootstrap\ServiceProviders;
-use core\http\middleware\ApiDebugMiddleware;
 use core\http\middleware\RouteContextMiddleware;
 
 /**
@@ -43,7 +42,6 @@ class HttpKernel extends Kernel
      */
     public array $middlewareGroups = [
         'api' => [
-            ApiDebugMiddleware::class,
         ],
         'web' => [
         ],

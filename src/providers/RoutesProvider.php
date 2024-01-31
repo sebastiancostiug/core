@@ -77,8 +77,8 @@ class RoutesProvider extends ServiceProvider
         $web = $this->resolve(RouteGroup::class);
 
         return $web->routes($get)->prefix(env('WEB_PREFIX', ''))->middleware([
-        ...$add['web'],
-        ...$add['global']
+            ...$add['web'],
+            ...$add['global']
         ]);
     }
 }

@@ -57,6 +57,7 @@ if (!function_exists('app')) {
     }
 }
 
+// Add routing middleware
 $app->addRoutingMiddleware();
 
 return $app;

@@ -15,8 +15,8 @@
 
 namespace core\bootstrap;
 
-use core\core\middleware\ApiDebugMiddleware;
 use core\foundation\Bootstrapper;
+use core\http\middleware\DebugHandler;
 
 /**
  * Debug class
@@ -40,35 +40,10 @@ class Debug extends Bootstrapper
             $log_error_details
         );
 
-        if (!self::inBrowser()) {
-            $debug = new ApiDebugMiddleware;
-            $errorMiddleware->setDefaultErrorHandler($debug->handler);
-        }
-    }
+        $defaultHandler = $errorMiddleware->getDefaultErrorHandler();
 
-    /**
-     * inBrowser() - Check if the request is made from a browser.
-     *
-     * @return boolean True if the request is made from a browser, false otherwise.
-     */
-    private static function inBrowser()
-    {
-        $browsers = [
-            '/msie/i'    => 'Internet explorer',
-            '/firefox/i' => 'Firefox',
-            '/safari/i'  => 'Safari',
-            '/chrome/i'  => 'Chrome',
-            '/edge/i'    => 'Edge',
-            '/opera/i'   => 'Opera',
-            '/mobile/i'  => 'Mobile browser',
-        ];
+        $debug = new DebugHandler($defaultHandler);
 
-        foreach ($browsers as $regex => $value) {
-            if (preg_match($regex, env('HTTP_USER_AGENT', ''))) {
-                return true;
-            }
-        }
-
-        return false;
+        $errorMiddleware->setDefaultErrorHandler($debug->handler);
     }
 }

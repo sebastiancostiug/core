@@ -62,25 +62,32 @@ class DebugHandler
             $input = app()->resolve(RequestInput::class);
 
             if ($displayErrorDetails) {
-                $payload['code']     = $exception->getCode();
+                $payload['user_id']  = Auth::user()['id'] ?? 'Guest';
                 $payload['input']    = $input->all();
+                $payload['code']     = $exception->getCode();
                 $payload['file']     = $exception->getFile();
                 $payload['line']     = $exception->getLine();
                 $payload['previous'] = $exception->getPrevious();
                 $payload['trace']    = $exception->getTrace();
             }
 
-            log_to_file(
-                'app_debug_log',
-                'ERROR: ' . $exception->getMessage(),
-                'CODE: ' . $exception->getCode(),
-                'FILE: ' . $exception->getFile(),
-                'LINE: ' . $exception->getLine(),
-                'USER_ID: ' . Auth::user()['id'] ?? 'Guest',
-                'INPUT: ' . json_encode($input->all(), JSON_UNESCAPED_SLASHES),
-                'TRACE:',
-                $exception->getTraceAsString()
-            );
+            if ($logErrors) {
+                $errorDetails = $logErrorDetails ? [
+                    'USER_ID: ' . Auth::user()['id'] ?? 'Guest',
+                    'INPUT: ' . json_encode($input->all(), JSON_UNESCAPED_SLASHES),
+                    'CODE: ' . $exception->getCode(),
+                    'FILE: ' . $exception->getFile(),
+                    'LINE: ' . $exception->getLine(),
+                    'TRACE:',
+                    $exception->getTraceAsString()
+                ] : [];
+
+                log_to_file(
+                    'app_debug_log',
+                    'ERROR: ' . $exception->getMessage(),
+                    ...$errorDetails
+                );
+            }
 
             if (static::isApiClient($request)) {
                 $response = new Response();

@@ -17,4 +17,5 @@
 return [
     'Filesystem' => common\Filesystem::class,
     'Collection' => common\Collection::class,
+    'CsrfEcho'   => core\http\middleware\CsrfEcho::class,
 ];

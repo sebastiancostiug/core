@@ -21,6 +21,7 @@ use core\bootstrap\Debug;
 use core\bootstrap\EnvironmentDetector;
 use core\bootstrap\EnvironmentVariables;
 use core\bootstrap\LoadAliases;
+use core\bootstrap\LoadCsrf;
 use core\bootstrap\Middleware;
 use core\bootstrap\ServiceProviders;
 use core\http\middleware\RouteContextMiddleware;
@@ -44,6 +45,7 @@ class HttpKernel extends Kernel
         'api' => [
         ],
         'web' => [
+            'csrf',
         ],
     ];
 
@@ -55,6 +57,7 @@ class HttpKernel extends Kernel
         EnvironmentVariables::class,
         Debug::class,
         LoadAliases::class,
+        LoadCsrf::class,
         Middleware::class,
         ServiceProviders::class,
     ];

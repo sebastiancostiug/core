@@ -61,7 +61,7 @@ class Middleware extends Bootstrapper
         app()->bind('middleware', fn() => [
             'global' => $globalMiddleware,
             'api'    => $apiMiddleware,
-            'web'    => $globalMiddleware,
+            'web'    => $webMiddleware,
         ]);
     }
 }

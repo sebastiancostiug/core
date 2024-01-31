@@ -66,4 +66,22 @@ class View
 
         return $this->view->render($this->response, views_path($template . '.php'), $with);
     }
+
+    /**
+     * randomPage()
+     *
+     * @param string $path Path to views folder
+     *
+     * @return string
+     */
+    public function randomPage($path = '')
+    {
+        $folder = scandir(views_path($path));
+        $views = array_slice($folder, 2, count($folder));
+        $views = array_map(function ($view) use ($path) {
+            return $path . DIRECTORY_SEPARATOR . $view;
+        }, $views);
+
+        return str_replace('.php', '', $views[array_rand($views)]);
+    }
 }

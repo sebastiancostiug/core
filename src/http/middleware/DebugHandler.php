@@ -58,13 +58,11 @@ class DebugHandler
             bool $logErrors,
             bool $logErrorDetails
         ) {
-            $payload = [
-                'error'    => $exception->getMessage(),
-                'code'     => $exception->getCode(),
-            ];
+            $payload['error'] = $exception->getMessage();
             $input = app()->resolve(RequestInput::class);
 
             if ($displayErrorDetails) {
+                $payload['code']     = $exception->getCode();
                 $payload['input']    = $input->all();
                 $payload['file']     = $exception->getFile();
                 $payload['line']     = $exception->getLine();
@@ -78,7 +76,7 @@ class DebugHandler
                 'CODE: ' . $exception->getCode(),
                 'FILE: ' . $exception->getFile(),
                 'LINE: ' . $exception->getLine(),
-                'USER ID: ' . Auth::user()['id'] ?? 'Guest',
+                'USER_ID: ' . Auth::user()['id'] ?? 'Guest',
                 'INPUT: ' . json_encode($input->all(), JSON_UNESCAPED_SLASHES),
                 'TRACE:',
                 $exception->getTraceAsString()
@@ -93,10 +91,10 @@ class DebugHandler
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
             }
 
-            if (file_exists(views_path('debug.php'))) {
-                $view = app()->resolve(View::class);
-
-                return $view('debug', $payload)->withStatus(500);
+            $view     = app()->resolve(View::class);
+            $template = $view->randomPage('error/exception');
+            if ($template) {
+                return $view($template, $payload)->withStatus(500);
             }
 
             return ($this->_defaultHandler)($request, $exception, $displayErrorDetails, $logErrors, $logErrorDetails);

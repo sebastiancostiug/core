@@ -51,7 +51,6 @@ class DebugHandler
     {
         $this->_defaultHandler = $defaultHandler;
 
-
         $this->handler = function (
             Request $request,
             Throwable $exception,

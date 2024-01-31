@@ -62,19 +62,29 @@ class DebugHandler
             $input = app()->resolve(RequestInput::class);
 
             if ($displayErrorDetails) {
-                $payload['user_id']  = Auth::user()['id'] ?? 'Guest';
-                $payload['input']    = $input->all();
-                $payload['code']     = $exception->getCode();
-                $payload['file']     = $exception->getFile();
-                $payload['line']     = $exception->getLine();
-                $payload['previous'] = $exception->getPrevious();
-                $payload['trace']    = $exception->getTrace();
+                $payload['timestamp']    = date('Y-m-d H:i:s');
+                $payload['http_method']  = $_SERVER['REQUEST_METHOD'];
+                $payload['url']          = $_SERVER['REQUEST_URI'];
+                $payload['user_agent']   = $_SERVER['HTTP_USER_AGENT'];
+                $payload['user_id']      = Auth::user()['id'] ?? 'Guest';
+                $payload['input']        = $input->all();
+                $payload['session_data'] = $_SESSION;
+                $payload['code']         = $exception->getCode();
+                $payload['file']         = $exception->getFile();
+                $payload['line']         = $exception->getLine();
+                $payload['previous']     = $exception->getPrevious();
+                $payload['trace']        = $exception->getTrace();
             }
 
             if ($logErrors) {
                 $errorDetails = $logErrorDetails ? [
+                    'TIMESTAMP: ' . date('Y-m-d H:i:s'),
+                    'HTTP_METHOD: ' . $_SERVER['REQUEST_METHOD'],
+                    'URL: ' . $_SERVER['REQUEST_URI'],
+                    'USER_AGENT: ' . $_SERVER['HTTP_USER_AGENT'],
                     'USER_ID: ' . Auth::user()['id'] ?? 'Guest',
                     'INPUT: ' . json_encode($input->all(), JSON_UNESCAPED_SLASHES),
+                    'SESSION_DATA: ' . json_encode($_SESSION, JSON_UNESCAPED_SLASHES),
                     'CODE: ' . $exception->getCode(),
                     'FILE: ' . $exception->getFile(),
                     'LINE: ' . $exception->getLine(),

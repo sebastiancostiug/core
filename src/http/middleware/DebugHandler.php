@@ -101,7 +101,7 @@ class DebugHandler
             $view     = app()->resolve(View::class);
             $template = $view->randomPage('error/exception');
             if ($template) {
-                return $view($template, $payload)->withStatus(500);
+                return $view($template, $payload, null)->withStatus(500);
             }
 
             return ($this->_defaultHandler)($request, $exception, $displayErrorDetails, $logErrors, $logErrorDetails);

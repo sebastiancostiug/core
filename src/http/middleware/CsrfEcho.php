@@ -87,11 +87,12 @@ class CsrfEcho
     /**
      * Returns the HTML code for the CSRF token input fields.
      *
-     * @param string $name The name of the method.
+     * @param string $name      The name of the method.
+     * @param array  $arguments The arguments passed to the method.
      *
      * @return string The HTML code for the CSRF token input fields.
      */
-    public static function __callStatic($name)
+    public static function __callStatic($name, array $arguments)
     {
         return (new static())();
     }

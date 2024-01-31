@@ -96,7 +96,7 @@ class DebugHandler
             if (file_exists(views_path('debug.php'))) {
                 $view = app()->resolve(View::class);
 
-                return $view('debug', $payload);
+                return $view('debug', $payload)->withStatus(500);
             }
 
             return ($this->_defaultHandler)($request, $exception, $displayErrorDetails, $logErrors, $logErrorDetails);

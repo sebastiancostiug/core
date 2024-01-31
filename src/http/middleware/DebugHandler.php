@@ -16,6 +16,7 @@
 
 namespace core\http\middleware;
 
+use app\components\Auth;
 use core\http\RequestInput;
 use core\http\View;
 use Nyholm\Psr7\ServerRequest as Request;
@@ -58,12 +59,12 @@ class DebugHandler
             bool $logErrors,
             bool $logErrorDetails
         ) {
-            $input = app()->resolve(RequestInput::class);
-
             $payload = [
                 'error'    => $exception->getMessage(),
                 'code'     => $exception->getCode(),
             ];
+            $input = app()->resolve(RequestInput::class);
+
             if ($displayErrorDetails) {
                 $payload['input']    = $input->all();
                 $payload['file']     = $exception->getFile();
@@ -72,7 +73,19 @@ class DebugHandler
                 $payload['trace']    = $exception->getTrace();
             }
 
-            if (!static::inBrowser()) {
+            log_to_file(
+                'app_debug_log',
+                'ERROR: ' . $exception->getMessage(),
+                'CODE: ' . $exception->getCode(),
+                'FILE: ' . $exception->getFile(),
+                'LINE: ' . $exception->getLine(),
+                'USER ID: ' . Auth::user()['id'] ?? 'Guest',
+                'INPUT: ' . json_encode($input->all(), JSON_UNESCAPED_SLASHES),
+                'TRACE:',
+                $exception->getTraceAsString()
+            );
+
+            if (static::isApiClient($request)) {
                 $response = new Response();
                 $response->getBody()->write(
                     json_encode($payload, JSON_UNESCAPED_SLASHES)
@@ -92,28 +105,16 @@ class DebugHandler
     }
 
     /**
-     * inBrowser() - Check if the request is made from a browser.
+     * isApiClient() - Check if the request for an api call.
      *
-     * @return boolean True if the request is made from a browser, false otherwise.
+     * @param Request $request The request object
+     *
+     * @return boolean True if the request is for an api call, false otherwise
      */
-    private static function inBrowser()
+    private static function isApiClient(Request $request): bool
     {
-        $browsers = [
-            '/msie/i'    => 'Internet explorer',
-            '/firefox/i' => 'Firefox',
-            '/safari/i'  => 'Safari',
-            '/chrome/i'  => 'Chrome',
-            '/edge/i'    => 'Edge',
-            '/opera/i'   => 'Opera',
-            '/mobile/i'  => 'Mobile browser',
-        ];
+        $acceptHeader = $request->getHeaderLine('Accept');
 
-        foreach ($browsers as $regex => $value) {
-            if (preg_match($regex, env('HTTP_USER_AGENT', ''))) {
-                return true;
-            }
-        }
-
-        return false;
+        return strpos($acceptHeader, 'application/json') !== false;
     }
 }

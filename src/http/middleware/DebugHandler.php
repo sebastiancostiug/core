@@ -38,10 +38,6 @@ class DebugHandler
      */
     private $_defaultHandler;
 
-    /**
-     * @var RequestInput $input Request Input
-     */
-    private $_input;
 
     /**
      * __construct()
@@ -62,15 +58,14 @@ class DebugHandler
             bool $logErrors,
             bool $logErrorDetails
         ) {
-            // $routeContext = \Slim\Routing\RouteContext::fromRequest($request);
-            // $route        = $routeContext->getRoute();
-            // $this->_input = new RequestInput($request, $route);
+            $input = app()->resolve(RequestInput::class);
 
             $payload = [
                 'error'    => $exception->getMessage(),
                 'code'     => $exception->getCode(),
             ];
             if ($displayErrorDetails) {
+                $payload['input']    = $input->all();
                 $payload['file']     = $exception->getFile();
                 $payload['line']     = $exception->getLine();
                 $payload['previous'] = $exception->getPrevious();

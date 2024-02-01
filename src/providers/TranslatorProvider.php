@@ -18,6 +18,9 @@
 
 namespace core\providers;
 
+use common\Fileloader;
+use common\Filesystem;
+use common\Translator;
 use core\components\ServiceProvider;
 
 /**
@@ -32,6 +35,14 @@ class TranslatorProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(Fileloader::class, fn(Filesystem $files) => new Fileloader($files, config('translate.path')));
+
+        $this->app->bind(Translator::class, function (Fileloader $loader) {
+            $loader->addNamespace('language', config('translate.path'));
+            $loader->load(config('app.locale'), 'validation', 'language');
+
+            return new Translator($loader, config('app.locale'));
+        });
     }
 
     /**

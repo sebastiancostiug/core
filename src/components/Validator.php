@@ -96,9 +96,9 @@ class Validator
         ];
 
         $this->filters = [
-            'trim'      => fn ($field) => trim($this->data[$field]),
+            'trim'      => fn ($field, $condition) => trim($this->data[$field] ?? '', $condition),
             'stripTags' => fn ($field) => strip_tags($this->data[$field]),
-            'lowercase' => fn ($field) => strtolower($this->data[$field]),
+            'lowercase' => fn ($field) => strtolower($this->data[$field] ?? ''),
             'hash'      => fn ($field) => password_hash($this->data[$field], PASSWORD_DEFAULT)
         ];
     }
@@ -195,6 +195,8 @@ class Validator
                 }
                 switch ($filter) {
                     case 'trim':
+                        $this->data[$field] = $this->filters[$filter]($field, $condition);
+                        break;
                     case 'stripTags':
                     case 'lowercase':
                     case 'hash':

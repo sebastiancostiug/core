@@ -43,20 +43,6 @@ class Validator
     protected $translator;
 
     /**
-     * All of the custom validator message replacers.
-     *
-     * @var array<string, \Closure|string>
-     */
-    protected $replacers = [];
-
-    /**
-     * All of the fallback messages for custom rules.
-     *
-     * @var array<string, string>
-     */
-    protected $fallbackMessages = [];
-
-    /**
      * The Validator resolver instance.
      *
      * @var \Closure
@@ -234,9 +220,22 @@ class Validator
      *
      * @return void
      */
-    public function rule($rule, $extension)
+    public function addRule($rule, $extension)
     {
         $this->extendedRules[$rule] = $extension;
+    }
+
+    /**
+     * Adds a custom filter extension.
+     *
+     * @param string          $filter    The name of the filter.
+     * @param \Closure|string $extension The extension to be added.
+     *
+     * @return void
+     */
+    public function addFilter($filter, $extension)
+    {
+        $this->extendedFilters[$filter] = $extension;
     }
 
     /**

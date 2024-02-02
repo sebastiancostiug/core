@@ -99,21 +99,21 @@ class Validator
         $this->data = $data;
 
         $this->rules = [
-        'required'  => fn ($field) => !isset($this->data[$field]) || $this->data[$field] === '',
-        'email'     => fn ($field) => !filter_var($this->data[$field], FILTER_VALIDATE_EMAIL),
-        'strength'  => fn ($field) => !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $this->data[$field] ?? ''),
-        'lengthMin' => fn ($field, $condition) => strlen($this->data[$field]) < $condition,
-        'lengthMax' => fn ($field, $condition) => strlen($this->data[$field]) > $condition,
-        'match'     => fn ($field, $condition) => $this->data[$field] !== $this->data[$condition],
-        'in'        => fn ($field, $condition) => !in_array($this->data[$field], explode(',', $condition)),
-        'unique'    => fn ($field, $condition) => (new $condition())->exists($field, $this->data[$field])
+            'required'  => fn ($field) => !isset($this->data[$field]) || $this->data[$field] === '',
+            'email'     => fn ($field) => !filter_var($this->data[$field], FILTER_VALIDATE_EMAIL),
+            'strength'  => fn ($field) => !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $this->data[$field] ?? ''),
+            'lengthMin' => fn ($field, $condition) => strlen($this->data[$field]) < $condition,
+            'lengthMax' => fn ($field, $condition) => strlen($this->data[$field]) > $condition,
+            'match'     => fn ($field, $condition) => $this->data[$field] !== $this->data[$condition],
+            'in'        => fn ($field, $condition) => !in_array($this->data[$field], explode(',', $condition)),
+            'unique'    => fn ($field, $condition) => (new $condition())->exists($field, $this->data[$field])
         ];
 
         $this->filters = [
-        'trim'      => fn ($field) => trim($this->data[$field]),
-        'stripTags' => fn ($field) => strip_tags($this->data[$field]),
-        'lowercase' => fn ($field) => strtolower($this->data[$field]),
-        'hash'      => fn ($field) => password_hash($this->data[$field], PASSWORD_DEFAULT)
+            'trim'      => fn ($field) => trim($this->data[$field]),
+            'stripTags' => fn ($field) => strip_tags($this->data[$field]),
+            'lowercase' => fn ($field) => strtolower($this->data[$field]),
+            'hash'      => fn ($field) => password_hash($this->data[$field], PASSWORD_DEFAULT)
         ];
     }
 

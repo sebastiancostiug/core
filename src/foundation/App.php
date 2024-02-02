@@ -27,6 +27,22 @@ namespace core\foundation;
 class App extends \Slim\App
 {
     /**
+     * Magic method to retrieve inaccessible properties.
+     *
+     * @param string $name The name of the property to retrieve.
+     *
+     * @return mixed The value of the property.
+     */
+    public function __get($name)
+    {
+        try {
+            return $this->resolve($name);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
      * Check if the application was booted via console and run the corresponding command.
      *
      * @return boolean Returns true if the application was booted via console, false otherwise.

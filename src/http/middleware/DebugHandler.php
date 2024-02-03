@@ -61,12 +61,14 @@ class DebugHandler
             $payload['error'] = $exception->getMessage();
             $input = app()->resolve(RequestInput::class);
 
+            $userId = app()->user?->id;
+
             if ($displayErrorDetails) {
                 $payload['timestamp']    = date('Y-m-d H:i:s');
                 $payload['http_method']  = $_SERVER['REQUEST_METHOD'];
                 $payload['url']          = $_SERVER['REQUEST_URI'];
                 $payload['user_agent']   = $_SERVER['HTTP_USER_AGENT'];
-                $payload['user_id']      = app()->user?->id;
+                $payload['user_id']      = $userId ?? 0;
                 $payload['input']        = $input->all();
                 $payload['session_data'] = $_SESSION;
                 $payload['code']         = $exception->getCode();
@@ -82,7 +84,7 @@ class DebugHandler
                     'HTTP_METHOD: ' . $_SERVER['REQUEST_METHOD'],
                     'URL: ' . $_SERVER['REQUEST_URI'],
                     'USER_AGENT: ' . $_SERVER['HTTP_USER_AGENT'],
-                    'USER_ID: ' . app()->user?->id ,
+                    'USER_ID: ' . $userId ?? 0 ,
                     'INPUT: ' . json_encode($input->all(), JSON_UNESCAPED_SLASHES),
                     'SESSION_DATA: ' . json_encode($_SESSION, JSON_UNESCAPED_SLASHES),
                     'CODE: ' . $exception->getCode(),

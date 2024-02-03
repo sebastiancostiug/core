@@ -133,6 +133,7 @@ class RequestInput
      * Fills the request input with the given array of data.
      *
      * @param array $array The array of data to fill the request input with.
+     *
      * @return $this The updated RequestInput object.
      */
     public function fill(array $array)

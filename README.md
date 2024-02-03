@@ -30,4 +30,4 @@ It contains an extension to Slim4 and also uses:
 -   slim/php-view
 -   slim/csrf
 
-and rewquires the helpers and common repos as dependencies
+and requires the helpers and common repos as dependencies

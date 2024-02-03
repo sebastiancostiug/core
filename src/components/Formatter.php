@@ -19,12 +19,14 @@
 
 namespace core\components;
 
+use common\Component;
+
 /**
  * Class Formatter
  *
  * This class is responsible for formatting data.
  */
-class Formatter
+class Formatter extends Component
 {
     /**
      * Converts a duration string to a formatted string.

@@ -18,12 +18,13 @@
 
 namespace core\components;
 
+use common\Component;
 use common\Translator;
 
 /**
  * Validator class
  */
-class Validator
+class Validator extends Component
 {
     /**
      * @var array $data Holds the data to be validated.

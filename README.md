@@ -28,3 +28,6 @@ It contains an extension to Slim4 and also uses:
 -   nyholm/psr7-server
 -   php-di/slim-bridge
 -   slim/php-view
+-   slim/csrf
+
+and rewquires the helpers and common repos as dependencies

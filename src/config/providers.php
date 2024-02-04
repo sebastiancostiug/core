@@ -16,6 +16,8 @@
 use core\providers\ConsoleProvider;
 use core\providers\FilesystemProvider;
 use core\providers\RoutesProvider;
+use core\providers\TranslatorProvider;
+use core\providers\ValidatorProvider;
 use core\providers\ViewProvider;
 
 return [
@@ -23,9 +25,13 @@ return [
         FilesystemProvider::class,
         RoutesProvider::class,
         ViewProvider::class,
+        TranslatorProvider::class,
+        ValidatorProvider::class,
     ],
     'console' => [
         FilesystemProvider::class,
         ConsoleProvider::class,
+        TranslatorProvider::class,
+        ValidatorProvider::class,
     ],
 ];

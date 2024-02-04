@@ -69,7 +69,6 @@ class DebugHandler
                 $payload['user_agent']   = $_SERVER['HTTP_USER_AGENT'];
                 $payload['user_id']      = $userId ?? 0;
                 $payload['input']        = $input->all();
-                $payload['session_data'] = $_SESSION;
                 $payload['code']         = $exception->getCode();
                 $payload['file']         = $exception->getFile();
                 $payload['line']         = $exception->getLine();
@@ -85,7 +84,6 @@ class DebugHandler
                     'USER_AGENT: ' . $_SERVER['HTTP_USER_AGENT'],
                     'USER_ID: ' . $userId ?? 0 ,
                     'INPUT: ' . json_encode($input->all(), JSON_UNESCAPED_SLASHES),
-                    'SESSION_DATA: ' . json_encode($_SESSION, JSON_UNESCAPED_SLASHES),
                     'CODE: ' . $exception->getCode(),
                     'FILE: ' . $exception->getFile(),
                     'LINE: ' . $exception->getLine(),

@@ -14,5 +14,5 @@
  */
 
 return [
-    'path' => base_path('languages'),
+    'path' => 'languages',
 ];

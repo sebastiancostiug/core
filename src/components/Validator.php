@@ -26,12 +26,12 @@ class Validator extends Component
     /**
      * @var array $data Holds the data to be validated.
      */
-    protected $data;
+    protected $data = [];
 
     /**
      * @var array $errors Holds the validation errors.
      */
-    protected $errors;
+    protected $errors = [];
 
     /**
      * The Translator implementation.
@@ -50,24 +50,24 @@ class Validator extends Component
     /**
      * @var array $rules Holds the validation rules.
      */
-    protected $rules;
+    protected $rules = [];
 
     /**
      * All of the custom validator extensions.
      *
      * @var array<string, \Closure|string>
      */
-    protected $extendedRules;
+    protected $extendedRules = [];
 
     /**
      * @var array $filters Holds the filters to be applied.
      */
-    protected $filters;
+    protected $filters = [];
 
     /**
      * @var array $extnededFilters Holds the extended filters to be applied.
      */
-    protected $extendedFilters;
+    protected $extendedFilters = [];
 
     /**
      * Constructor for the Validator class.
@@ -80,12 +80,12 @@ class Validator extends Component
     public function __construct(Translator $translator, array $data)
     {
         $this->translator = $translator;
-        $this->data = $data;
+        $this->data       = $data;
 
         $this->rules = [
-            'required'  => fn ($field) => !isset($this->data[$field]) || $this->data[$field] === '',
-            'email'     => fn ($field) => !filter_var($this->data[$field], FILTER_VALIDATE_EMAIL),
-            'strength'  => fn ($field) => !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $this->data[$field] ?? ''),
+            'required'  => fn ($field) => !empty(trim($this->data[$field] ?? '')),
+            'email'     => fn ($field) => filter_var($this->data[$field], FILTER_VALIDATE_EMAIL),
+            'strength'  => fn ($field) => preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $this->data[$field] ?? ''),
             'lengthMin' => fn ($field, $condition) => strlen($this->data[$field]) < $condition,
             'lengthMax' => fn ($field, $condition) => strlen($this->data[$field]) > $condition,
             'match'     => fn ($field, $condition) => $this->data[$field] !== $this->data[$condition],
@@ -102,26 +102,16 @@ class Validator extends Component
     }
 
     /**
-     * Check if the validation fails.
+     * Get the errors from the validator.
      *
-     * @return boolean Returns true if the validation fails, false otherwise.
+     * @return array The array of errors.
      */
-    public function fails()
-    {
-        return !empty($this->errors);
-    }
-
-        /**
-         * Get the errors from the validator.
-         *
-         * @return array The array of errors.
-         */
     public function errors()
     {
         return $this->errors;
     }
 
-        /**
+    /**
      * Enforces validation rules on the given data using the specified rules and messages.
      *
      * @param array $rules    The validation rules to be applied.
@@ -132,15 +122,13 @@ class Validator extends Component
     public function enforce(array $rules, array $messages = []): Validator
     {
         foreach ($rules as $field => $fieldRules) {
-            $fieldRules = explode('|', $fieldRules);
-
             foreach ($fieldRules as $rule) {
                 $condition = null;
                 if (strpos($rule, ':') !== false) {
                     list($rule, $condition) = explode(':', $rule);
                 }
 
-                $message = $messages[$field][$rule] ?? $this->translator->translate("validation.{$rule}", ['attribute' => $field]);
+                $message = $messages[$field][$rule] ?? $this->translator->translate("{$rule}", ['attribute' => $field]);
 
                 switch ($rule) {
                     case 'required':

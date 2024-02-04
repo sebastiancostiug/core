@@ -1,7 +1,6 @@
 <?php
 /**
- *
- * @package     slim-base
+ * @package     Core
  *
  * @subpackage  Validator
  *
@@ -9,11 +8,9 @@
  * @copyright   2019-2024 Sebastian Costiug
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
- * @category    slim-base
- * @see
+ * @category    components
  *
  * @since       2024-02-01
- *
  */
 
 namespace core\components;

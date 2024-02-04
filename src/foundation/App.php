@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @package     Core
  *
  * @subpackage  App class
@@ -10,10 +9,8 @@
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
  * @category    foundation
- * @see         https://www.slimframework.com/docs/v4/
  *
  * @since       2023-12-02
- *
  */
 
 namespace core\foundation;

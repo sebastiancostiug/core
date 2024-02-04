@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @package     Core
  *
  * @subpackage  ConsoleProvider
@@ -12,7 +11,6 @@
  * @category    providers
  *
  * @since       2023-12-02
- *
  */
 
 namespace core\providers;

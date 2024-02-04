@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @package     Core
  *
  * @subpackage  AppFactory class
@@ -13,7 +12,6 @@
  * @see         https://www.slimframework.com/docs/v4/
  *
  * @since       2023-12-02
- *
  */
 
 namespace core\foundation;

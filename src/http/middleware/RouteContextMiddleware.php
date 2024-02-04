@@ -1,19 +1,16 @@
 <?php
 /**
+ * @package     Core
  *
- * @package     slim-base
- *
- * @subpackage  RouteContextMiddleware
+ * @subpackage  Route Context Middleware
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2024 Sebastian Costiug
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
- * @category    slim-base
- * @see
+ * @category    middleware
  *
  * @since       2024-01-27
- *
  */
 
 namespace core\http\middleware;

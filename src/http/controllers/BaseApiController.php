@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Sore
+ * @package     Core
  *
  * @subpackage  HTTP controllers
  *

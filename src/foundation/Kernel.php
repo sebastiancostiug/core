@@ -9,7 +9,6 @@
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
  * @category    kernel
- * @see         https://www.slimframework.com/docs/v4/
  *
  * @since       2023-10-17
  */

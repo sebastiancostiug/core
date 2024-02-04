@@ -2,7 +2,7 @@
 /**
  * @package     Core
  *
- * @subpackage  Service Provider class
+ * @subpackage  Views Service Provider class
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2023 Sebastian Costiug

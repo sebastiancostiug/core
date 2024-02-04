@@ -2,7 +2,7 @@
 /**
  * @package     Slim 4 Base
  *
- * @subpackage  <Service Provider class>
+ * @subpackage  Routes Service Provider class
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2023 Sebastian Costiug

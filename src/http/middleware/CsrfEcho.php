@@ -1,7 +1,6 @@
 <?php
 /**
- *
- * @package     slim-base
+ * @package     Core
  *
  * @subpackage  CsrfEcho
  *
@@ -9,11 +8,9 @@
  * @copyright   2019-2024 Sebastian Costiug
  * @license     https://opensource.org/licenses/BSD-3-Clause
  *
- * @category    slim-base
- * @see
+ * @category    csrf
  *
  * @since       2024-01-31
- *
  */
 
 namespace core\http\middleware;

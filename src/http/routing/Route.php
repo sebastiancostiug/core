@@ -2,7 +2,7 @@
 /**
  * @package     Core
  *
- * @subpackage  Http routing
+ * @subpackage  Route class
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2023 Sebastian Costiug

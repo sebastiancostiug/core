@@ -39,7 +39,7 @@ class RouteContextMiddleware
         $routeContext = \Slim\Routing\RouteContext::fromRequest($request);
         $route = $routeContext->getRoute();
 
-        throw_when(empty($route), new \Exception('Route not found'));
+        throw_when(empty($route), ['Route not found']);
 
         app()->bind(Redirect::class, fn(Psr17Factory $factory) => new Redirect($factory));
 

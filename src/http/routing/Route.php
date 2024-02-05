@@ -16,6 +16,9 @@
 
 namespace core\http\routing;
 
+use core\exceptions\RouteException;
+use RuntimeException;
+
 /**
  * Route class
  */
@@ -104,6 +107,6 @@ class Route
 
         $fails = !((is_callable($action)) or (is_string($action) and str_is('*@*', $action)));
 
-        throw_when($fails, [$exception . $context]);
+        throw_when($fails, [$exception . $context], RouteException::class);
     }
 }

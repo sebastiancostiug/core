@@ -17,6 +17,7 @@ namespace core\components;
 
 use common\Component;
 use common\Translator;
+use core\exceptions\ModelException;
 
 /**
  * Validator class
@@ -102,13 +103,16 @@ class Validator extends Component
     }
 
     /**
-     * Get the errors from the validator.
+     * Checks if the data is valid.
      *
-     * @return array The array of errors.
+     * @return boolean
+     * @throws ModelException If the validation gathers errors.
      */
-    public function errors()
+    public function isValid(): bool
     {
-        return $this->errors;
+        throw_when(!empty($this->errors), ['Model validation failed', $this->errors], ModelException::class);
+
+        return true;
     }
 
     /**

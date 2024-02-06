@@ -226,9 +226,8 @@ class Model extends Component implements RecordInterface
             $rules   = $this->rules[$this->scenario] ?? [];
             $filters = $this->filters[$this->scenario] ?? [];
         }
-        $this->setErrors($validator->filter($filters)->enforce($rules)->errors());
 
-        return empty($this->errors);
+        return $validator->filter($filters)->enforce($rules)->isValid();
     }
 
     /**

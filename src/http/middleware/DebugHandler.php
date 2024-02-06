@@ -57,23 +57,25 @@ class DebugHandler
             bool $logErrors,
             bool $logErrorDetails
         ) {
+            $payload['name'] = method_exists($exception, 'getName') ? $exception->getName() : 'Exception';
             $payload['error'] = $exception->getMessage();
             $input = app()->resolve(RequestInput::class);
 
             $userId = app()->user?->id;
 
             if ($displayErrorDetails) {
-                $payload['timestamp']    = date('Y-m-d H:i:s');
-                $payload['http_method']  = $_SERVER['REQUEST_METHOD'];
-                $payload['url']          = $_SERVER['REQUEST_URI'];
-                $payload['user_agent']   = $_SERVER['HTTP_USER_AGENT'];
-                $payload['user_id']      = $userId ?? 0;
-                $payload['input']        = $input->all();
-                $payload['code']         = $exception->getCode();
-                $payload['file']         = $exception->getFile();
-                $payload['line']         = $exception->getLine();
-                $payload['previous']     = $exception->getPrevious();
-                $payload['trace']        = $exception->getTrace();
+                $payload['timestamp']   = date('Y-m-d H:i:s');
+                $payload['http_method'] = $_SERVER['REQUEST_METHOD'];
+                $payload['url']         = $_SERVER['REQUEST_URI'];
+                $payload['user_agent']  = $_SERVER['HTTP_USER_AGENT'];
+                $payload['user_id']     = $userId ?? 0;
+                $payload['input']       = $input->all();
+                $payload['code']        = $exception->getCode();
+                $payload['file']        = $exception->getFile();
+                $payload['line']        = $exception->getLine();
+                $payload['previous']    = $exception->getPrevious();
+                $payload['debug']       = method_exists($exception, 'getErrors') ? $exception->getErrors() : [];
+                $payload['trace']       = $exception->getTrace();
             }
 
             if ($logErrors) {
@@ -87,6 +89,8 @@ class DebugHandler
                     'CODE: ' . $exception->getCode(),
                     'FILE: ' . $exception->getFile(),
                     'LINE: ' . $exception->getLine(),
+                    'PREVIOUS: ' . $exception->getPrevious(),
+                    'DEBUG: ' . json_encode(method_exists($exception, 'getErrors') ? $exception->getErrors() : [], JSON_UNESCAPED_SLASHES),
                     'TRACE:',
                     $exception->getTraceAsString()
                 ] : [];

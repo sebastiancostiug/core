@@ -23,7 +23,7 @@ class RouteException extends \Exception
     /**
      * @var array $errors The errors of the model.
      */
-    protected array $errors = [];
+    protected array $_errors = [];
 
     /**
      * __construct()
@@ -39,7 +39,7 @@ class RouteException extends \Exception
     {
         parent::__construct($message, $code, $previous);
 
-        $this->errors = $errors;
+        $this->_errors = $errors;
     }
 
     /**
@@ -49,7 +49,7 @@ class RouteException extends \Exception
      */
     public function getErrors(): array
     {
-        return $this->errors;
+        return $this->_errors;
     }
 
     /**

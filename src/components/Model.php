@@ -18,6 +18,7 @@ namespace core\components;
 use common\Component;
 use common\Translator;
 use core\components\Validator;
+use core\exceptions\ModelException;
 use database\Record;
 use database\RecordInterface;
 
@@ -227,7 +228,15 @@ class Model extends Component implements RecordInterface
             $filters = $this->filters[$this->scenario] ?? [];
         }
 
-        return $validator->filter($filters)->enforce($rules)->isValid();
+        try {
+            $validator->filter($filters)->enforce($rules)->isValid();
+
+            return true;
+        } catch (ModelException $e) {
+            $this->setErrors($e->getErrors());
+
+            return false;
+        }
     }
 
     /**
@@ -295,14 +304,13 @@ class Model extends Component implements RecordInterface
     /**
      * Find a record by a specific field and value
      *
-     * @param  string $field Field
-     * @param  string $value Value
+     * @param  array $conditions Conditions
      *
      * @return self|false The model instance if found, or false if not found.
      */
-    public static function findBy(string $field, string $value): self|false
+    public static function findBy(array $conditions): self|false
     {
-        $record = static::find()->where([$field => $value])->one();
+        $record = static::find()->where($conditions)->one();
 
         if (empty($record)) {
             return false;
@@ -316,14 +324,13 @@ class Model extends Component implements RecordInterface
         /**
      * Find all records by a specific field and value
      *
-     * @param  string      $field Field
-     * @param  string|null $value Value
+     * @param  array $conditions Conditions
      *
      * @return array|false An array with all records of the model or false if no records are found.
      */
-    public static function findAllBy(string $field, string|null $value): array|false
+    public static function findAllBy(array $conditions): array|false
     {
-        $fetchData = static::find()->where([$field => $value])->all();
+        $fetchData = static::find()->where($conditions)->all();
 
         if (empty($fetchData)) {
             return false;

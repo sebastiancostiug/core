@@ -16,9 +16,11 @@
 
 namespace core\http\controllers;
 
+use core\components\Controller;
+
 /**
- * BaseController class
+ * WebController class
  */
-class BaseWebController
+class WebController extends Controller
 {
 }

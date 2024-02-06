@@ -102,7 +102,7 @@ class DebugHandler
                 );
             }
 
-            if (static::isApiClient($request)) {
+            if (is_api_client()) {
                 $response = new Response();
                 $response->getBody()->write(
                     json_encode($payload, JSON_UNESCAPED_SLASHES)
@@ -119,19 +119,5 @@ class DebugHandler
 
             return ($this->_defaultHandler)($request, $exception, $displayErrorDetails, $logErrors, $logErrorDetails);
         };
-    }
-
-    /**
-     * isApiClient() - Check if the request for an api call.
-     *
-     * @param Request $request The request object
-     *
-     * @return boolean True if the request is for an api call, false otherwise
-     */
-    private static function isApiClient(Request $request): bool
-    {
-        $acceptHeader = $request->getHeaderLine('Accept');
-
-        return strpos($acceptHeader, 'application/json') !== false;
     }
 }

@@ -16,12 +16,13 @@
 
 namespace core\http\controllers;
 
+use core\components\Controller;
 use Nyholm\Psr7\Response;
 
 /**
- * BaseController class
+ * Controller class
  */
-class BaseApiController
+class ApiController extends Controller
 {
     /**
      * jsonResponse

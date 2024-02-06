@@ -31,7 +31,7 @@ class ValidatorProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(Validator::class, fn ($data) => new Validator(app()->resolve(Translator::class), $data));
+        $this->app->bind(Validator::class, fn ($data) => new Validator(app()->resolve(Translator::class)));
     }
 
     /**

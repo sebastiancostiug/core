@@ -221,15 +221,14 @@ class Model extends Component implements RecordInterface
     {
         $this->beforeValidate();
 
-        $validator = new Validator(app()->resolve(Translator::class), $this->attributes);
-
         if ($this->scenario) {
             $rules   = $this->rules[$this->scenario] ?? [];
             $filters = $this->filters[$this->scenario] ?? [];
         }
 
+        $validator = app()->resolve(Validator::class);
         try {
-            $validator->filter($filters)->enforce($rules)->isValid();
+            $validator->load($this->attributes)->filter($filters)->enforce($rules)->isValid();
 
             return true;
         } catch (ModelException $e) {

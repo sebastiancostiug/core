@@ -78,10 +78,9 @@ class Validator extends Component
      *
      * @return void
      */
-    public function __construct(Translator $translator, array $data)
+    public function __construct(Translator $translator)
     {
         $this->translator = $translator;
-        $this->data       = $data;
 
         $this->rules = [
             'required'  => fn ($field) => !empty(trim($this->data[$field] ?? '')),
@@ -100,6 +99,19 @@ class Validator extends Component
             'lowercase' => fn ($field) => strtolower($this->data[$field] ?? ''),
             'hash'      => fn ($field) => password_hash($this->data[$field], PASSWORD_DEFAULT)
         ];
+    }
+
+    /**
+     * Load data into the validator.
+     *
+     * @param array $data The data to be loaded.
+     * @return self
+     */
+    public function load(array $data): self
+    {
+        $this->data = $data;
+
+        return $this;
     }
 
     /**

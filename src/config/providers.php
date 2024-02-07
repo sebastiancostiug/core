@@ -33,6 +33,7 @@ return [
     'console' => [
         FilesystemProvider::class,
         ConsoleProvider::class,
+        FileloaderProvider::class,
         TranslatorProvider::class,
         ValidatorProvider::class,
     ],

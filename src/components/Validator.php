@@ -78,9 +78,9 @@ class Validator extends Component
             'required'  => fn ($field) => !empty(trim($this->data[$field] ?? '')),
             'email'     => fn ($field) => filter_var($this->data[$field], FILTER_VALIDATE_EMAIL),
             'strength'  => fn ($field) => preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $this->data[$field] ?? ''),
-            'lengthMin' => fn ($field, $condition) => strlen($this->data[$field]) < $condition,
-            'lengthMax' => fn ($field, $condition) => strlen($this->data[$field]) > $condition,
-            'match'     => fn ($field, $condition) => $this->data[$field] !== $this->data[$condition],
+            'lengthMin' => fn ($field, $condition) => strlen($this->data[$field] ?? '') < $condition,
+            'lengthMax' => fn ($field, $condition) => strlen($this->data[$field] ?? '') > $condition,
+            'match'     => fn ($field, $condition) => isset($this->data[$field]) && isset($this->data[$condition]) && $this->data[$field] !== $this->data[$condition],
             'in'        => fn ($field, $condition) => !in_array($this->data[$field], explode(',', $condition)),
             'unique'    => fn ($field, $condition) => (new $condition())->exists($field, $this->data[$field])
         ];

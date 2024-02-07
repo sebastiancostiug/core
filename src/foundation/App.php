@@ -40,6 +40,30 @@ class App extends \Slim\App
     }
 
     /**
+     * Magic method to handle dynamic method calls.
+     *
+     * @param string $name      The name of the method being called.
+     * @param array  $arguments The arguments passed to the method.
+     *
+     * @return mixed The result of the method call.
+     */
+    public function __call($name, array $arguments): mixed
+    {
+        try {
+            $resolved = $this->resolve($name);
+
+            if (is_callable($resolved)) {
+                return call_user_func_array($resolved, $arguments);
+            }
+
+            // If the resolved value is not callable, try to resolve it as a property.
+            return $this->__get($name);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
      * Check if the application was booted via console and run the corresponding command.
      *
      * @return boolean Returns true if the application was booted via console, false otherwise.

@@ -14,6 +14,7 @@
  */
 
 use core\providers\ConsoleProvider;
+use core\providers\FileloaderProvider;
 use core\providers\FilesystemProvider;
 use core\providers\RoutesProvider;
 use core\providers\TranslatorProvider;
@@ -25,6 +26,7 @@ return [
         FilesystemProvider::class,
         RoutesProvider::class,
         ViewProvider::class,
+        FileloaderProvider::class,
         TranslatorProvider::class,
         ValidatorProvider::class,
     ],

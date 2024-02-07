@@ -32,13 +32,16 @@ class TranslatorProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(Fileloader::class, fn(Filesystem $files) => new Fileloader($files, config('translate.path')));
+        $this->app->bind('translate', function () {
+            return function ($translations, $key, $replacements = [], $locale = null) {
+                $loader = app()->resolve(Fileloader::class);
+                $loader->addNamespace('language', config('translate.path'));
+                $loader->load(config('app.locale'), $translations, 'language');
 
-        $this->app->bind(Translator::class, function (Fileloader $loader) {
-            $loader->addNamespace('language', config('translate.path'));
-            $loader->load(config('app.locale'), 'validation', 'language');
+                $translator = new Translator($loader, $translations, config('app.locale'));
 
-            return new Translator($loader, config('app.locale'));
+                return $translator->translate($key, $replacements, $locale);
+            };
         });
     }
 

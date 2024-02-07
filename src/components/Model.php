@@ -226,11 +226,8 @@ class Model extends Component implements RecordInterface
             $filters = $this->filters[$this->scenario] ?? [];
         }
 
-        $validator = app()->resolve(Validator::class);
         try {
-            $validator->load($this->attributes)->filter($filters)->enforce($rules)->isValid();
-
-            return true;
+            return app()->validate($this->attributes, $rules, $filters)->isValid();
         } catch (ModelException $e) {
             $this->setErrors($e->getErrors());
 

@@ -2,7 +2,7 @@
 /**
  * @package     Core
  *
- * @subpackage  ValidatorProvider
+ * @subpackage  Translator Service Provider class
  *
  * @author      Sebastian Costiug <sebastian@overbyte.dev>
  * @copyright   2019-2024 Sebastian Costiug
@@ -10,19 +10,20 @@
  *
  * @category    Service Providers
  *
- * @since       2024-02-04
+ * @since       2024-02-01
  */
 
 namespace core\providers;
 
+use common\Fileloader;
+use common\Filesystem;
 use common\Translator;
 use core\components\ServiceProvider;
-use core\components\Validator;
 
 /**
- * ValidatorProvider class
+ * TranslatorProvider class
  */
-class ValidatorProvider extends ServiceProvider
+class FileloaderProvider extends ServiceProvider
 {
     /**
      * register()
@@ -31,17 +32,7 @@ class ValidatorProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('validate', function () {
-            return function ($data, $rules, $filters = []) {
-                $validator = new Validator($data);
-
-                if (!empty($filters)) {
-                    $validator = $validator->filter($filters);
-                }
-
-                return $validator->enforce($rules);
-            };
-        });
+        $this->app->bind(Fileloader::class, fn(Filesystem $files, $path) => new Fileloader($files, $path));
     }
 
     /**
@@ -53,7 +44,4 @@ class ValidatorProvider extends ServiceProvider
     {
         //  placeholder
     }
-}
-{
-
 }

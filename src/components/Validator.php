@@ -35,13 +35,6 @@ class Validator extends Component
     protected $errors = [];
 
     /**
-     * The Translator implementation.
-     *
-     * @var Translator
-     */
-    protected $translator;
-
-    /**
      * The Validator resolver instance.
      *
      * @var \Closure
@@ -73,14 +66,13 @@ class Validator extends Component
     /**
      * Constructor for the Validator class.
      *
-     * @param Translator $translator The Translator implementation.
-     * @param array      $data       The data to be validated.
+     * @param array $data The data to be validated.
      *
      * @return void
      */
-    public function __construct(Translator $translator)
+    public function __construct(array $data)
     {
-        $this->translator = $translator;
+        $this->data = $data;
 
         $this->rules = [
             'required'  => fn ($field) => !empty(trim($this->data[$field] ?? '')),
@@ -99,19 +91,6 @@ class Validator extends Component
             'lowercase' => fn ($field) => strtolower($this->data[$field] ?? ''),
             'hash'      => fn ($field) => password_hash($this->data[$field], PASSWORD_DEFAULT)
         ];
-    }
-
-    /**
-     * Load data into the validator.
-     *
-     * @param array $data The data to be loaded.
-     * @return self
-     */
-    public function load(array $data): self
-    {
-        $this->data = $data;
-
-        return $this;
     }
 
     /**
@@ -144,7 +123,7 @@ class Validator extends Component
                     list($rule, $condition) = explode(':', $rule);
                 }
 
-                $message = $messages[$field][$rule] ?? $this->translator->translate("{$rule}", ['attribute' => $field]);
+                $message = $messages[$field][$rule] ?? app()->translate('validation', "{$rule}", ['attribute' => $field]);
 
                 switch ($rule) {
                     case 'required':

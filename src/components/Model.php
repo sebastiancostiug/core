@@ -262,7 +262,6 @@ class Model extends Component implements RecordInterface
      */
     public function afterSave($insert)
     {
-        $this->forgetAttributes();
     }
 
     /**
@@ -411,10 +410,9 @@ class Model extends Component implements RecordInterface
         if (!$this->validate()) {
             return false;
         }
-
         $this->beforeSave($this->isNewRecord());
 
-        $id = $record->setAttributes($this->attributes())->save();
+        $id = $record->setAttributes($this->attributes)->save();
 
         $this->afterSave($this->isNewRecord());
 
@@ -489,19 +487,7 @@ class Model extends Component implements RecordInterface
      */
     public function attributeNames()
     {
-        $record = new Record(static::class);
-
-        $attributes = $record->getColumns() ?? [];
-
-        $class = new \ReflectionClass($this);
-
-        foreach ($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
-            if (!$property->isStatic()) {
-                $attributes[] = $property->getName();
-            }
-        }
-
-        return $attributes;
+        return array_keys($this->getLabels());
     }
 
     /**

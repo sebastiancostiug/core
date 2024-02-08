@@ -75,12 +75,12 @@ class Validator extends Component
         $this->data = $data;
 
         $this->rules = [
-            'required'  => fn ($field) => !empty(trim($this->data[$field] ?? '')),
-            'email'     => fn ($field) => filter_var($this->data[$field], FILTER_VALIDATE_EMAIL),
-            'strength'  => fn ($field) => preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $this->data[$field] ?? ''),
+            'required'  => fn ($field) => empty(trim($this->data[$field] ?? '')),
+            'email'     => fn ($field) => !filter_var($this->data[$field], FILTER_VALIDATE_EMAIL),
+            'strength'  => fn ($field) => !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $this->data[$field] ?? ''),
             'lengthMin' => fn ($field, $condition) => strlen($this->data[$field] ?? '') < $condition,
             'lengthMax' => fn ($field, $condition) => strlen($this->data[$field] ?? '') > $condition,
-            'match'     => fn ($field, $condition) => isset($this->data[$field]) && isset($this->data[$condition]) && $this->data[$field] !== $this->data[$condition],
+            'match'     => fn ($field, $condition) => !isset($this->data[$field]) || !isset($this->data[$condition]) || $this->data[$field] !== $this->data[$condition],
             'in'        => fn ($field, $condition) => !in_array($this->data[$field], explode(',', $condition)),
             'unique'    => fn ($field, $condition) => (new $condition())->exists($field, $this->data[$field])
         ];
@@ -119,8 +119,11 @@ class Validator extends Component
         foreach ($rules as $field => $fieldRules) {
             foreach ($fieldRules as $rule) {
                 $condition = null;
-                if (strpos($rule, ':') !== false) {
-                    list($rule, $condition) = explode(':', $rule);
+                if (strpos($rule, '=') !== false) {
+                    list($rule, $condition) = explode('=', $rule);
+                    if (strpos($condition, ',') !== false) {
+                        $condition = explode(',', $condition);
+                    }
                 }
 
                 $message = $messages[$field][$rule] ?? app()->translate('validation', "{$rule}", ['attribute' => $field]);
@@ -129,7 +132,7 @@ class Validator extends Component
                     case 'required':
                     case 'email':
                     case 'strength':
-                        if (!$this->rules[$rule]($field)) {
+                        if ($this->rules[$rule]($field)) {
                             $this->errors[$field] = $message;
                         }
                         break;
@@ -139,7 +142,7 @@ class Validator extends Component
                     case 'match':
                     case 'in':
                     case 'unique':
-                        if (!$this->rules[$rule]($field, $condition)) {
+                        if ($this->rules[$rule]($field, $condition)) {
                             $this->errors[$field] = $message;
                         }
                         break;

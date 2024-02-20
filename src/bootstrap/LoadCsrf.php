@@ -33,6 +33,11 @@ class LoadCsrf extends Bootstrapper
      */
     public function boot()
     {
-        $this->app->bind('csrf', fn (Psr17Factory $factory) =>new Guard($factory));
+        $this->app->bind('csrf', function (Psr17Factory $factory) {
+            $guard = new Guard($factory);
+            $guard->setPersistentTokenMode(true);
+
+            return $guard;
+        });
     }
 }

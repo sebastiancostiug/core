@@ -39,7 +39,9 @@ class ValidatorProvider extends ServiceProvider
                     $validator = $validator->filter($filters);
                 }
 
-                return $validator->enforce($rules);
+                $validator = $validator->enforce($rules);
+
+                return $validator;
             };
         });
     }

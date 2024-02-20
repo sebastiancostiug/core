@@ -128,30 +128,34 @@ class Validator extends Component
 
                 $message = $messages[$field][$rule] ?? app()->translate('validation', "{$rule}", ['attribute' => $field]);
 
-                switch ($rule) {
-                    case 'required':
-                    case 'email':
-                    case 'strength':
-                        if ($this->rules[$rule]($field)) {
-                            $this->errors[$field] = $message;
-                        }
-                        break;
+                try {
+                    switch ($rule) {
+                        case 'required':
+                        case 'email':
+                        case 'strength':
+                            if ($this->rules[$rule]($field)) {
+                                $this->errors[$field] = $message;
+                            }
+                            break;
 
-                    case 'lengthMin':
-                    case 'lengthMax':
-                    case 'match':
-                    case 'in':
-                    case 'unique':
-                        if ($this->rules[$rule]($field, $condition)) {
-                            $this->errors[$field] = $message;
-                        }
-                        break;
+                        case 'lengthMin':
+                        case 'lengthMax':
+                        case 'match':
+                        case 'in':
+                        case 'unique':
+                            if ($this->rules[$rule]($field, $condition)) {
+                                $this->errors[$field] = $message;
+                            }
+                            break;
 
-                    default:
-                        if (isset($this->extendedRules[$rule])) {
-                            $this->validate($rule, $field, $condition);
-                        }
-                        break;
+                        default:
+                            if (isset($this->extendedRules[$rule])) {
+                                $this->validate($rule, $field, $condition);
+                            }
+                            break;
+                    }
+                } catch (\database\DatabaseException $e) {
+                    $this->errors[$field] = $e->getMessage();
                 }
             }
         }
@@ -233,7 +237,7 @@ class Validator extends Component
      *
      * @return void
      */
-    protected function validate($rule, $field, $condition)
+    protected function validate($rule, $field, $condition): void
     {
         $extension = $this->extendedRules[$rule];
 

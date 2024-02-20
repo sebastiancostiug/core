@@ -16,8 +16,6 @@
 namespace core\components;
 
 use common\Component;
-use common\Translator;
-use core\components\Validator;
 use core\exceptions\ModelException;
 use database\Record;
 use database\RecordInterface;

@@ -32,6 +32,16 @@ class ValidatorProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('validate', function () {
+            /*
+             * Returns a closure that creates a new Validator instance and applies filters and rules to it.
+             *
+             * @param mixed $data The data to be validated.
+             * @param array $rules The validation rules to be enforced.
+             * @param array $filters The filters to be applied to the data before validation (optional).
+             *
+             * @return Validator The Validator instance with filters and rules applied.
+             */
+
             return function ($data, $rules, $filters = []) {
                 $validator = new Validator($data);
 

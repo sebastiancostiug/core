@@ -16,15 +16,19 @@
 use core\providers\ConsoleProvider;
 use core\providers\FileloaderProvider;
 use core\providers\FilesystemProvider;
+use core\providers\RedirectProvider;
 use core\providers\RoutesProvider;
+use core\providers\SessionProvider;
 use core\providers\TranslatorProvider;
 use core\providers\ValidatorProvider;
 use core\providers\ViewProvider;
 
 return [
     'web' => [
+        SessionProvider::class,
         FilesystemProvider::class,
         RoutesProvider::class,
+        RedirectProvider::class,
         ViewProvider::class,
         FileloaderProvider::class,
         TranslatorProvider::class,

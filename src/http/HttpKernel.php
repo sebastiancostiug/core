@@ -22,6 +22,7 @@ use core\bootstrap\EnvironmentDetector;
 use core\bootstrap\EnvironmentVariables;
 use core\bootstrap\LoadAliases;
 use core\bootstrap\LoadCsrf;
+use core\bootstrap\LoadSession;
 use core\bootstrap\Middleware;
 use core\bootstrap\ServiceProviders;
 use core\http\middleware\RouteContextMiddleware;
@@ -53,6 +54,7 @@ class HttpKernel extends Kernel
      * @var array $boostrap Register application bootstrap loaders
      */
     public array $bootstrappers = [
+        LoadSession::class,
         EnvironmentDetector::class,
         EnvironmentVariables::class,
         Debug::class,

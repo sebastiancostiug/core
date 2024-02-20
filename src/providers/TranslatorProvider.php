@@ -33,6 +33,17 @@ class TranslatorProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('translate', function () {
+            /*
+             * Returns a closure that translates a given key using the specified translations, replacements, and locale.
+             *
+             * @param array $translations The translations array.
+             * @param string $key The key to be translated.
+             * @param array $replacements The replacements array for placeholders in the translation.
+             * @param string|null $locale The locale to be used for translation. If null, the default locale will be used.
+             *
+             * @return string The translated string.
+             */
+
             return function ($translations, $key, $replacements = [], $locale = null) {
                 $loader = app()->resolve(Fileloader::class);
                 $loader->addNamespace('language', config('translate.path'));

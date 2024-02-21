@@ -51,9 +51,9 @@ class Routing
     {
         try {
             $routeInput = app()->resolve(RequestInput::class);
-            $back = $routeInput->getUri();
+            $path = $routeInput->getUri()->getPath();
 
-            return $this->redirect($back);
+            return $this->redirect($path);
         } catch (\Throwable $th) {
             throw_when(true, [$th->getMessage()]);
         }

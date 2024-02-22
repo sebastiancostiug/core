@@ -98,9 +98,9 @@ class Session
      * @param string $key   Key
      * @param mixed  $value Value
      *
-     * @return mixed
+     * @return mixed|void
      */
-    public function flash($key = null, mixed $value = null): mixed
+    public function flash($key = null, mixed $value = null)
     {
         // Initialize flashes array if it doesn't exist
         if (!$this->has('flashes')) {

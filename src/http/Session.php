@@ -33,6 +33,17 @@ class Session
     }
 
     /**
+     * Invalidates the session
+     *
+     * @return void
+     */
+    public function invalidate(): void
+    {
+        session_unset();
+        session_destroy();
+    }
+
+    /**
      * Sets a session variable
      *
      * @param string $key   Key
@@ -82,13 +93,34 @@ class Session
     }
 
     /**
-     * Invalidates the session
+     * Flashes a session variable
      *
-     * @return void
+     * @param string $key   Key
+     * @param mixed  $value Value
+     *
+     * @return mixed
      */
-    public function invalidate(): void
+    public function flash($key = null, mixed $value = null): mixed
     {
-        session_unset();
-        session_destroy();
+        // Initialize flashes array if it doesn't exist
+        if (!$this->has('flashes')) {
+            $this->set('flashes', []);
+        }
+
+        // If a key and value are provided, set it as a flash message
+        if ($key && $value) {
+            $flashes = $this->get('flashes');
+            $flashes[$key] = $value;
+            $this->set('flashes', $flashes);
+        }
+        // If only a key is provided, get and remove the flash message
+        else if ($key) {
+            $flashes = $this->get('flashes');
+            $value = $flashes[$key] ?? null;
+            unset($flashes[$key]);
+            $this->set('flashes', $flashes);
+
+            return $value;
+        }
     }
 }

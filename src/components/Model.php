@@ -694,6 +694,7 @@ class Model extends Component implements RecordInterface
      */
     public function setErrors(array $errors)
     {
+        app()->session()->flash('errors', $errors);
         $this->errors = $errors;
     }
 

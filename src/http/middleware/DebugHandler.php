@@ -59,7 +59,7 @@ class DebugHandler
         ) {
             $payload['name'] = method_exists($exception, 'getName') ? $exception->getName() : 'Exception';
             $payload['error'] = $exception->getMessage();
-            $input = app()->resolve(RequestInput::class);
+            // $input = app()->resolve(RequestInput::class) ?? null;
 
             $userId = app()->user?->id;
 
@@ -69,7 +69,7 @@ class DebugHandler
                 $payload['url']         = $_SERVER['REQUEST_URI'];
                 $payload['user_agent']  = $_SERVER['HTTP_USER_AGENT'];
                 $payload['user_id']     = $userId ?? 0;
-                $payload['input']       = $input->all();
+                // $payload['input']       = $input->all();
                 $payload['code']        = $exception->getCode();
                 $payload['file']        = $exception->getFile();
                 $payload['line']        = $exception->getLine();
@@ -85,7 +85,7 @@ class DebugHandler
                     'URL: ' . $_SERVER['REQUEST_URI'],
                     'USER_AGENT: ' . $_SERVER['HTTP_USER_AGENT'],
                     'USER_ID: ' . $userId ?? 0 ,
-                    'INPUT: ' . json_encode($input->all(), JSON_UNESCAPED_SLASHES),
+                    // 'INPUT: ' . json_encode($input->all(), JSON_UNESCAPED_SLASHES),
                     'CODE: ' . $exception->getCode(),
                     'FILE: ' . $exception->getFile(),
                     'LINE: ' . $exception->getLine(),

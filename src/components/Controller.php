@@ -29,7 +29,7 @@ class Controller extends Component
      *
      * @return mixed null for public access, integer for specific role access, array for multiple role access
      */
-    protected static function access($action): mixed
+    public static function access($action): mixed
     {
         return null;
     }

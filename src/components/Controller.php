@@ -22,4 +22,15 @@ use common\Component;
  */
 class Controller extends Component
 {
+    /**
+     * returns the access level for the action
+     *
+     * @param string $action The action
+     *
+     * @return mixed null for public access, integer for specific role access, array for multiple role access
+     */
+    protected static function access($action): mixed
+    {
+        return null;
+    }
 }

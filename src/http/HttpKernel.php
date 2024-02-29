@@ -19,7 +19,6 @@ namespace core\http;
 use core\foundation\Kernel;
 use core\bootstrap\Debug;
 use core\bootstrap\EnvironmentDetector;
-use core\bootstrap\EnvironmentVariables;
 use core\bootstrap\LoadAliases;
 use core\bootstrap\LoadCsrf;
 use core\bootstrap\LoadSession;
@@ -56,7 +55,6 @@ class HttpKernel extends Kernel
     public array $bootstrappers = [
         LoadSession::class,
         EnvironmentDetector::class,
-        EnvironmentVariables::class,
         Debug::class,
         LoadAliases::class,
         LoadCsrf::class,

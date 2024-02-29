@@ -182,6 +182,18 @@ class Model extends Component implements RecordInterface
     }
 
     /**
+     * tableExists
+     *
+     * @return boolean
+     */
+    public function tableExists()
+    {
+        $record = new Record(static::class);
+
+        return $record->tableExists();
+    }
+
+    /**
      * afterFind
      *
      * @return $this

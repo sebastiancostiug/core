@@ -53,20 +53,19 @@ class Model extends Component implements RecordInterface
      * @var array $rules Rules
      */
     protected array $rules = [
-        'id'         => 'integer',
-        'created_by' => 'integer',
-        'updated_by' => 'integer',
+        'created_by' => ['integer'],
+        'updated_by' => ['integer'],
     ];
 
     /**
      * @var array $filters Filters
      */
     protected array $filters = [
-            'id'         => 'integer',
-            'created_by' => 'integer',
-            'created_at' => 'datetime',
-            'updated_by' => 'integer',
-            'updated_at' => 'datetime',
+            'id'         => ['integer'],
+            'created_by' => ['integer'],
+            'created_at' => ['datetime'],
+            'updated_by' => ['integer'],
+            'updated_at' => ['datetime'],
         ];
 
     /**
@@ -222,6 +221,9 @@ class Model extends Component implements RecordInterface
         if ($this->scenario) {
             $rules   = $this->rules[$this->scenario] ?? [];
             $filters = $this->filters[$this->scenario] ?? [];
+        } else {
+            $rules   = $this->rules;
+            $filters = $this->filters;
         }
 
         try {
@@ -593,6 +595,46 @@ class Model extends Component implements RecordInterface
     }
 
     /**
+     * Returns an array of private data.
+     *
+     * @return array The private data.
+     */
+    public function private(): array
+    {
+        return [];
+    }
+
+    /**
+     * Get the validation rules for the model.
+     *
+     * @return array The validation rules.
+     */
+    public function rules(): array
+    {
+        return [];
+    }
+
+    /**
+     * Get the filters for the model.
+     *
+     * @return array The filters for the model.
+     */
+    public function filters(): array
+    {
+        return [];
+    }
+
+    /**
+     * Get the default values for the model.
+     *
+     * @return array The default values.
+     */
+    public function labels(): array
+    {
+        return [];
+    }
+
+    /**
      * Get the default values for the model.
      *
      * @return array The default values.
@@ -618,16 +660,6 @@ class Model extends Component implements RecordInterface
      *
      * @return array The validation rules.
      */
-    public function rules(): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the validation rules for the model.
-     *
-     * @return array The validation rules.
-     */
     public function getRules(): array
     {
         return $this->rules;
@@ -642,16 +674,6 @@ class Model extends Component implements RecordInterface
     public function setRules(array $rules): void
     {
         $this->add('rules', $rules);
-    }
-
-    /**
-     * Get the filters for the model.
-     *
-     * @return array The filters for the model.
-     */
-    public function filters(): array
-    {
-        return [];
     }
 
     /**
@@ -717,16 +739,6 @@ class Model extends Component implements RecordInterface
     public function setLabels(array $labels): void
     {
         $this->add('labels', $labels);
-    }
-
-    /**
-     * Get the default values for the model.
-     *
-     * @return array The default values.
-     */
-    public function labels(): array
-    {
-        return [];
     }
 
     /**

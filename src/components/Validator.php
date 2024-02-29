@@ -76,6 +76,9 @@ class Validator extends Component
 
         $this->rules = [
             'required'  => fn ($field) => empty(trim($this->data[$field] ?? '')),
+            'string'    => fn ($field) => !is_string($this->data[$field] ?? ''),
+            'integer'   => fn ($field) => !is_numeric($this->data[$field] ?? ''),
+            'boolean'   => fn ($field) => !is_bool($this->data[$field] ?? ''),
             'email'     => fn ($field) => !filter_var($this->data[$field], FILTER_VALIDATE_EMAIL),
             'strength'  => fn ($field) => !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $this->data[$field] ?? ''),
             'lengthMin' => fn ($field, $condition) => strlen($this->data[$field] ?? '') < $condition,
@@ -117,6 +120,9 @@ class Validator extends Component
     public function enforce(array $rules, array $messages = []): Validator
     {
         foreach ($rules as $field => $fieldRules) {
+            if (!is_array($fieldRules)) {
+                dd($field, $fieldRules, $rules);
+            }
             foreach ($fieldRules as $rule) {
                 $condition = null;
                 if (strpos($rule, '=') !== false) {

@@ -120,9 +120,6 @@ class Validator extends Component
     public function enforce(array $rules, array $messages = []): Validator
     {
         foreach ($rules as $field => $fieldRules) {
-            if (!is_array($fieldRules)) {
-                dd($field, $fieldRules, $rules);
-            }
             foreach ($fieldRules as $rule) {
                 $condition = null;
                 if (strpos($rule, '=') !== false) {
@@ -179,7 +176,6 @@ class Validator extends Component
     public function filter(array $filters): Validator
     {
         foreach ($filters as $field => $fieldFilters) {
-            $fieldFilters = explode('|', $fieldFilters);
 
             foreach ($fieldFilters as $filter) {
                 if (strpos($filter, ':') !== false) {
@@ -193,9 +189,6 @@ class Validator extends Component
                         break;
                     case 'stripTags':
                     case 'lowercase':
-                    case 'hash':
-                        $this->data[$field] = $this->filters[$filter]($field);
-                        break;
 
                     default:
                         if (isset($this->extendedFilters[$filter])) {

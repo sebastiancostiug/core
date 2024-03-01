@@ -47,9 +47,9 @@ class TranslatorProvider extends ServiceProvider
             return function ($translations, $key, $replacements = [], $locale = null) {
                 $loader = app()->resolve(Fileloader::class);
                 $loader->addNamespace('language', config('translate.path'));
-                $loader->load(config('app.locale'), $translations, 'language');
+                $loader->load(env('APP_LOCALE', 'en'), $translations, 'language');
 
-                $translator = new Translator($loader, $translations, config('app.locale'));
+                $translator = new Translator($loader, $translations, env('APP_LOCALE', 'en'));
 
                 return $translator->translate($key, $replacements, $locale);
             };

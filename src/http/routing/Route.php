@@ -56,7 +56,7 @@ class Route
         $app = self::$app;
         [$route, $action, $type] = $parameters;
 
-        if (!config("app.enabled.$type")) {
+        if (!env(strtoupper($type) . '_ENABLED', 1)) {
             $action = 'DefaultController@catchall';
         }
 

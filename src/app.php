@@ -18,7 +18,7 @@
 require_once dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . 'autoload.php';
 
 // Timezone
-date_default_timezone_set(config('app.timezone'));
+date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 
 if (dev_env()) {
     // Development

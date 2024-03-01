@@ -59,7 +59,7 @@ class RoutesProvider extends ServiceProvider
         $add = $this->resolve('middleware');
         $api = $this->resolve(RouteGroup::class);
 
-        return $api->routes($get)->prefix(env('API_PREFIX', 'api'))->middleware([
+        return $api->routes($get)->prefix(env('API_PREFIX', '/api'))->middleware([
             ...$add['api'],
             ...$add['global']
         ]);

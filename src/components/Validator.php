@@ -84,7 +84,7 @@ class Validator extends Component
             'lengthMin' => fn ($field, $condition) => strlen($this->data[$field] ?? '') < $condition,
             'lengthMax' => fn ($field, $condition) => strlen($this->data[$field] ?? '') > $condition,
             'match'     => fn ($field, $condition) => !isset($this->data[$field]) || !isset($this->data[$condition]) || $this->data[$field] !== $this->data[$condition],
-            'in'        => fn ($field, $condition) => !in_array($this->data[$field], explode(',', $condition)),
+            'in'        => fn ($field, $condition) => !in_array($this->data[$field], $condition),
             'unique'    => fn ($field, $condition) => (new $condition())->exists($field, $this->data[$field])
         ];
 
@@ -176,7 +176,6 @@ class Validator extends Component
     public function filter(array $filters): Validator
     {
         foreach ($filters as $field => $fieldFilters) {
-
             foreach ($fieldFilters as $filter) {
                 if (strpos($filter, ':') !== false) {
                     $filter    = explode(':', $filter);

@@ -214,7 +214,8 @@ class Model extends Component implements RecordInterface
     {
         if ($this->isNewRecord()) {
             foreach ($this->defaults as $key => $value) {
-                if (!isset($this->$key)) {
+                $assignedValue = $this->$key;
+                if (!$assignedValue) {
                     $this->$key = $value;
                 }
             }

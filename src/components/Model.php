@@ -15,7 +15,6 @@
 
 namespace core\components;
 
-use common\Component;
 use core\exceptions\ModelException;
 use database\Record;
 use database\RecordInterface;
@@ -108,6 +107,8 @@ class Model extends Component implements RecordInterface
      */
     public function __construct(array $attributes = [])
     {
+        parent::__construct();
+
         $this->setLabels($this->labels());
         $this->setRules($this->rules());
         $this->setFilters($this->filters());

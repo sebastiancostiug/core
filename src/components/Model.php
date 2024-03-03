@@ -107,8 +107,6 @@ class Model extends Component implements RecordInterface
      */
     public function __construct(array $attributes = [])
     {
-        parent::__construct();
-
         $this->setLabels($this->labels());
         $this->setRules($this->rules());
         $this->setFilters($this->filters());

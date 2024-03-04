@@ -36,11 +36,6 @@ class View
     protected PhpRenderer $view;
 
     /**
-     * @var AssetManager $assets Asset manager
-     */
-    protected AssetManager $assets;
-
-    /**
      * __construct()
      *
      * @param Psr17Factory $factory REsponse factory
@@ -52,8 +47,6 @@ class View
         $this->response = $factory->createResponse(200, 'Success');
 
         $this->view = new PhpRenderer();
-
-        $this->assets = new AssetManager();
     }
 
     /**
@@ -67,12 +60,14 @@ class View
      */
     public function __invoke($template = '', array $with = [], $layout = 'main') : Response
     {
+        $assets = app()->assets($layout);
+
         if ($layout) {
             $this->view->setLayout(views_path('layouts') . DIRECTORY_SEPARATOR . $layout . '.php');
         }
 
-        $with['css'] = $this->assets->outputAssets($template, 'css');
-        $with['js'] = $this->assets->outputAssets($template, 'js');
+        $with['css'] = $assets->output('css');
+        $with['js'] = $assets->output('js');
 
         return $this->view->render($this->response, views_path($template . '.php'), $with);
     }

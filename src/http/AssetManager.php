@@ -23,55 +23,67 @@ use core\components\Component;
 class AssetManager extends Component
 {
     /**
-     * @var array $assets Assets
+     * @var array $css CSS assets
      */
-    protected array $assets = [];
+    protected array $css = [];
+
+    /**
+     * @var array $js JS assets
+     */
+    protected array $js = [];
 
     /**
      * register()
      *
-     * @param string $view View or layout name
      * @param string $type Asset type (css or js)
      * @param string $path Asset path
      *
      * @return void
      */
-    public function register(string $view, string $type, string $path): void
+    public function register(string $type, string $path): void
     {
-        $this->assets[$view][$type][] = $path;
+        if ($type === 'css') {
+            $this->css[] = $path;
+        } elseif ($type === 'js') {
+            $this->js[] = $path;
+        }
     }
 
     /**
-     * getAssets()
+     * get()
      *
-     * @param string $view View or layout name
      * @param string $type Asset type (css or js)
      *
      * @return array
      */
-    public function getAssets(string $view, string $type): array
+    protected function get(string $type): array
     {
-        return $this->assets[$view][$type] ?? [];
+        if ($type === 'css') {
+            return $this->css;
+        } elseif ($type === 'js') {
+            return $this->js;
+        }
+
+        return [];
     }
 
     /**
      * outputAssets()
      *
-     * @param string $view View or layout name
      * @param string $type Asset type (css or js)
      *
      * @return string
      */
-    public function outputAssets(string $view, string $type): string
+    public function output(string $type): string
     {
-        $assets = $this->getAssets($view, $type);
+        $assets = $this->get($type);
         $output = '';
 
         foreach ($assets as $asset) {
             if ($type === 'css') {
-                $output .= '<link rel="stylesheet" href="' . $asset . '">';
+                $output .= '<link rel="stylesheet" href="' . $asset . '">' . PHP_EOL;
             } elseif ($type === 'js') {
-                $output .= '<script src="' . $asset . '"></script>';
+                $output .= '<script src="' . $asset . '"></script>' . PHP_EOL;
             }
         }
 

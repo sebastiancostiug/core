@@ -13,6 +13,7 @@
  * @since       2023.01.23
  */
 
+use core\providers\AssetsProvider;
 use core\providers\ConsoleProvider;
 use core\providers\FileloaderProvider;
 use core\providers\FilesystemProvider;
@@ -29,6 +30,7 @@ return [
         FilesystemProvider::class,
         RoutesProvider::class,
         RedirectProvider::class,
+        AssetsProvider::class,
         ViewProvider::class,
         FileloaderProvider::class,
         TranslatorProvider::class,

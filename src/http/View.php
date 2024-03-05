@@ -36,6 +36,11 @@ class View
     protected PhpRenderer $view;
 
     /**
+     * @var string $this->theme Theme name
+     */
+    protected string $theme = 'default';
+
+    /**
      * __construct()
      *
      * @param Psr17Factory $factory REsponse factory
@@ -47,6 +52,8 @@ class View
         $this->response = $factory->createResponse(200, 'Success');
 
         $this->view = new PhpRenderer();
+
+        $this->theme = config('theme.selected');
     }
 
     /**
@@ -63,13 +70,16 @@ class View
         $assets = app()->assets($layout);
 
         if ($layout) {
-            $this->view->setLayout(views_path('layouts') . DIRECTORY_SEPARATOR . $layout . '.php');
+            $layoutPath = config("theme.{$this->theme}.views_path") . DIRECTORY_SEPARATOR . '_layouts' . DIRECTORY_SEPARATOR;
+            $this->view->setLayout($layoutPath . $layout . '.php');
         }
 
         $with['css'] = $assets->output('css');
         $with['js'] = $assets->output('js');
 
-        return $this->view->render($this->response, views_path($template . '.php'), $with);
+        $viewPath = config("theme.{$this->theme}.views_path") . DIRECTORY_SEPARATOR;
+
+        return $this->view->render($this->response, $viewPath . $template . '.php', $with);
     }
 
     /**
@@ -81,7 +91,7 @@ class View
      */
     public function randomPage($path = '')
     {
-        $folder = scandir(views_path($path));
+        $folder = scandir(views_path("{$this->theme}/{$path}"));
         $views = array_slice($folder, 2, count($folder));
         $views = array_map(function ($view) use ($path) {
             return $path . DIRECTORY_SEPARATOR . $view;

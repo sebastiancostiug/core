@@ -80,10 +80,15 @@ class AssetManager extends Component
         $output = '';
 
         foreach ($assets as $asset) {
+            $theme = config('theme.selected');
+            $assetsPath = assets_path($theme);
+            $assetUrl = str_starts_with($asset, 'http') ? $asset : "/assets.php?file={$assetsPath}" . $asset;
             if ($type === 'css') {
-                $output .= '<link rel="stylesheet" href="' . $asset . '">' . PHP_EOL;
+                $output .= '<link rel="stylesheet" href="' . $assetUrl . '">' . PHP_EOL;
             } elseif ($type === 'js') {
-                $output .= '<script src="' . $asset . '"></script>' . PHP_EOL;
+                $output .= '<script src="' . $assetUrl . '"></script>' . PHP_EOL;
+            } elseif ($type === 'icon') {
+                $output .= '<link rel="icon" href="' . $assetUrl . '">' . PHP_EOL;
             }
         }
 

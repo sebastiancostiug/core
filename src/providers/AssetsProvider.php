@@ -34,7 +34,9 @@ class AssetsProvider extends ServiceProvider
             $assets = new AssetManager();
 
             return function ($layout) use ($assets) {
-                foreach (config("assets.$layout") as $type => $assetsList) {
+                $theme = config('theme.selected');
+
+                foreach (config("theme.$theme.layout.$layout") as $type => $assetsList) {
                     foreach ($assetsList as $asset) {
                         $assets->register($type, $asset);
                     }

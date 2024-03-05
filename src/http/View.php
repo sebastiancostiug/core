@@ -74,6 +74,7 @@ class View
             $this->view->setLayout($layoutPath . $layout . '.php');
         }
 
+        $with['icon'] = $assets->output('icon');
         $with['css'] = $assets->output('css');
         $with['js'] = $assets->output('js');
 

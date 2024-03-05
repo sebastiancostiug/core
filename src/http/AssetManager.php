@@ -33,9 +33,14 @@ class AssetManager extends Component
     protected array $js = [];
 
     /**
+     * @var array $icon Icon assets
+     */
+    protected array $icon = [];
+
+    /**
      * register()
      *
-     * @param string $type Asset type (css or js)
+     * @param string $type Asset type (css or js or icon)
      * @param string $path Asset path
      *
      * @return void
@@ -46,13 +51,15 @@ class AssetManager extends Component
             $this->css[] = $path;
         } elseif ($type === 'js') {
             $this->js[] = $path;
+        } elseif ($type === 'icon') {
+            $this->icon[] = $path;
         }
     }
 
     /**
      * get()
      *
-     * @param string $type Asset type (css or js)
+     * @param string $type Asset type (css or js or icon)
      *
      * @return array
      */
@@ -62,6 +69,8 @@ class AssetManager extends Component
             return $this->css;
         } elseif ($type === 'js') {
             return $this->js;
+        } elseif ($type === 'icon') {
+            return $this->icon;
         }
 
         return [];
@@ -70,7 +79,7 @@ class AssetManager extends Component
     /**
      * outputAssets()
      *
-     * @param string $type Asset type (css or js)
+     * @param string $type Asset type (css or js or icon)
      *
      * @return string
      */
@@ -78,17 +87,16 @@ class AssetManager extends Component
     {
         $assets = $this->get($type);
         $output = '';
-
         foreach ($assets as $asset) {
-            $theme = config('theme.selected');
-            $assetsPath = assets_path($theme);
+            $assetsPath = assets_path(config('theme.selected'));
             $assetUrl = str_starts_with($asset, 'http') ? $asset : "/assets.php?file={$assetsPath}" . $asset;
+
             if ($type === 'css') {
-                $output .= '<link rel="stylesheet" href="' . $assetUrl . '">' . PHP_EOL;
+                $output .= '<link rel="stylesheet" href="' . $assetUrl . '"/>' . PHP_EOL;
             } elseif ($type === 'js') {
                 $output .= '<script src="' . $assetUrl . '"></script>' . PHP_EOL;
             } elseif ($type === 'icon') {
-                $output .= '<link rel="icon" href="' . $assetUrl . '">' . PHP_EOL;
+                $output .= '<link rel="icon" href="' . $assetUrl . '" type="image/x-icon"/>' . PHP_EOL;
             }
         }
 

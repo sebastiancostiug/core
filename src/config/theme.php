@@ -26,6 +26,9 @@ return [
                 'js' => [
                     '/js/main.js',
                 ],
+                'icon' => [
+                    '/icons/favicon' . rand(1, 11) . '.ico'
+                ],
             ],
             'blank' => [
                 'css' => [],

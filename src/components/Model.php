@@ -25,6 +25,16 @@ use database\RecordInterface;
 class Model extends Component implements RecordInterface
 {
     /**
+     * Class events
+     */
+    const EVENT_BEFORE_VALIDATE = 'beforeValidate';
+    const EVENT_AFTER_VALIDATE  = 'afterValidate';
+    const EVENT_BEFORE_SAVE     = 'beforeSave';
+    const EVENT_AFTER_SAVE      = 'afterSave';
+    const EVENT_BEFORE_DELETE   = 'beforeDelete';
+    const EVENT_AFTER_DELETE    = 'afterDelete';
+
+    /**
      * The default scenario for the model.
      */
     const SCENARIO_DEFAULT = 'default';
@@ -219,6 +229,8 @@ class Model extends Component implements RecordInterface
                 }
             }
         }
+
+        $this->trigger(self::EVENT_BEFORE_VALIDATE);
     }
 
     /**
@@ -239,7 +251,10 @@ class Model extends Component implements RecordInterface
         }
 
         try {
-            return app()->validate($this->attributes, $rules, $filters)->isValid();
+            app()->validate($this->attributes, $rules, $filters)->isValid();
+            $this->trigger(self::EVENT_AFTER_VALIDATE);
+
+            return true;
         } catch (ModelException $e) {
             $this->setErrors($e->getErrors());
 
@@ -260,8 +275,7 @@ class Model extends Component implements RecordInterface
         if (!$this->isNewRecord()) {
             $this->setChangedAttributes();
         }
-
-        return true;
+        $this->trigger(self::EVENT_BEFORE_SAVE);
     }
 
     /**
@@ -274,6 +288,7 @@ class Model extends Component implements RecordInterface
      */
     public function afterSave($insert)
     {
+        $this->trigger(self::EVENT_AFTER_SAVE);
     }
 
     /**
@@ -283,7 +298,7 @@ class Model extends Component implements RecordInterface
      */
     public function beforeDelete()
     {
-        return true;
+        $this->trigger(self::EVENT_BEFORE_DELETE);
     }
 
     /**
@@ -293,7 +308,7 @@ class Model extends Component implements RecordInterface
      */
     public function afterDelete()
     {
-        return true;
+        $this->trigger(self::EVENT_AFTER_DELETE);
     }
 
     /**
@@ -574,6 +589,11 @@ class Model extends Component implements RecordInterface
         $this->oldAttributes = !$this->isNewRecord() ? $this->getAttributes() : [];
     }
 
+    public function getChangedAttributes()
+    {
+        return $this->changedAttributes;
+    }
+
     /**
      * Set the changed attributes of the model
      *
@@ -582,6 +602,9 @@ class Model extends Component implements RecordInterface
     public function setChangedAttributes()
     {
         $this->changedAttributes = array_intersect_assoc($this->attributes(), $this->oldAttributes);
+        if(!empty($this->changedAttributes)) {
+            dd($this->changedAttributes);
+        }
     }
 
     /**

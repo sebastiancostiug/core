@@ -25,6 +25,10 @@ class Component extends \common\Component
      */
     protected $events = [];
 
+    public function __construct()
+    {
+        $this->attachBehaviors($this->behaviors());
+    }
 
     /**
      * Attach an event handler to the component.
@@ -134,7 +138,7 @@ class Component extends \common\Component
      */
     public function getBehaviors()
     {
-        return $this->behaviors;
+        return $this->behaviors();
     }
 
     /**

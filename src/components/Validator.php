@@ -16,7 +16,6 @@
 namespace core\components;
 
 use common\Component;
-use common\Translator;
 use core\exceptions\ModelException;
 
 /**

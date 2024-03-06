@@ -17,12 +17,10 @@
 namespace core\http\controllers;
 
 use core\components\Controller;
-use core\http\AssetManager;
 
 /**
  * WebController class
  */
 class WebController extends Controller
 {
-
 }

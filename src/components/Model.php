@@ -27,10 +27,13 @@ class Model extends Component implements RecordInterface
     /**
      * Class events
      */
+    const EVENT_AFTER_FIND      = 'afterFind';
     const EVENT_BEFORE_VALIDATE = 'beforeValidate';
     const EVENT_AFTER_VALIDATE  = 'afterValidate';
-    const EVENT_BEFORE_SAVE     = 'beforeSave';
-    const EVENT_AFTER_SAVE      = 'afterSave';
+    const EVENT_BEFORE_INSERT   = 'beforeInsert';
+    const EVENT_AFTER_INSERT    = 'afterInsert';
+    const EVENT_BEFORE_UPDATE   = 'beforeUpdate';
+    const EVENT_AFTER_UPDATE    = 'afterUpdate';
     const EVENT_BEFORE_DELETE   = 'beforeDelete';
     const EVENT_AFTER_DELETE    = 'afterDelete';
 
@@ -117,6 +120,8 @@ class Model extends Component implements RecordInterface
      */
     public function __construct(array $attributes = [])
     {
+        parent::__construct();
+
         $this->setLabels($this->labels());
         $this->setRules($this->rules());
         $this->setFilters($this->filters());
@@ -132,7 +137,6 @@ class Model extends Component implements RecordInterface
      * Initializes the model.
      *
      * This method is called at the end of the constructor.
-     * The default implementation raises an x@xxx \core\events\Event} event.
      * You may override this method to do some initialization when your model is created.
      *
      * @return void
@@ -210,6 +214,7 @@ class Model extends Component implements RecordInterface
     public function afterFind()
     {
         $this->setOldAttributes();
+        $this->trigger(self::EVENT_AFTER_FIND);
 
         return $this;
     }
@@ -268,14 +273,16 @@ class Model extends Component implements RecordInterface
      *
      * @param boolean $insert Insert
      *
-     * @return boolean
+     * @return void
      */
     public function beforeSave($insert)
     {
         if (!$this->isNewRecord()) {
             $this->setChangedAttributes();
+            $this->trigger(self::EVENT_BEFORE_UPDATE);
+        } else {
+            $this->trigger(self::EVENT_BEFORE_INSERT);
         }
-        $this->trigger(self::EVENT_BEFORE_SAVE);
     }
 
     /**
@@ -288,13 +295,17 @@ class Model extends Component implements RecordInterface
      */
     public function afterSave($insert)
     {
-        $this->trigger(self::EVENT_AFTER_SAVE);
+        if (!$this->isNewRecord()) {
+            $this->trigger(self::EVENT_AFTER_UPDATE);
+        } else {
+            $this->trigger(self::EVENT_AFTER_INSERT);
+        }
     }
 
     /**
      * beforeDelete
      *
-     * @return boolean
+     * @return void
      */
     public function beforeDelete()
     {
@@ -304,7 +315,7 @@ class Model extends Component implements RecordInterface
     /**
      * afterDelete
      *
-     * @return boolean
+     * @return void
      */
     public function afterDelete()
     {
@@ -589,6 +600,11 @@ class Model extends Component implements RecordInterface
         $this->oldAttributes = !$this->isNewRecord() ? $this->getAttributes() : [];
     }
 
+    /**
+     * Returns the attributes that have been changed in the model.
+     *
+     * @return array The array of changed attributes.
+     */
     public function getChangedAttributes()
     {
         return $this->changedAttributes;
@@ -602,9 +618,6 @@ class Model extends Component implements RecordInterface
     public function setChangedAttributes()
     {
         $this->changedAttributes = array_intersect_assoc($this->attributes(), $this->oldAttributes);
-        if(!empty($this->changedAttributes)) {
-            dd($this->changedAttributes);
-        }
     }
 
     /**

@@ -21,85 +21,168 @@ namespace core\components;
 class Event extends \common\Component
 {
     /**
-     * @var array The event handlers for the component
+     * @var string $name The name of the event.
      */
-    protected static $events = [];
+    protected string $name;
 
     /**
-     * Attach an event handler to a class.
+     * @var mixed $sender The object that raises the event.
+     */
+    protected mixed $sender;
+
+    /**
+     * @var callable $handler The event handler.
+     */
+    protected callable $handler;
+
+    /**
+     * @var mixed $data Optional. Additional data to pass to the event handler.
+     */
+    protected mixed $data;
+
+    /**
+     * @var boolean $append Optional. Whether to append the event handler to the existing handlers or replace them.
+     */
+    protected bool $append;
+
+    /**
+     * Event constructor
      *
-     * @param string   $class   The class name.
-     * @param string   $name    The event name.
+     * @param string   $name    The name of the event.
      * @param callable $handler The event handler function.
-     * @param mixed    $data    Optional data to pass to the event handler.
-     * @param boolean  $append  Whether to append the event handler to the existing ones or replace them.
+     * @param mixed    $data    Optional. Additional data to pass to the event handler.
+     * @param boolean  $append  Optional. Whether to append the event handler to the existing handlers or replace them.
      *
      * @return void
      */
-    public static function on($class, $name, callable $handler, mixed $data = null, $append = true)
+    public function __construct(string $name, callable $handler, mixed $data = null, bool $append = true)
     {
-        if ($append || empty(self::$events[$name][$class])) {
-            self::$events[$name][$class][] = [$handler, $data];
-        } else {
-            array_unshift(self::$events[$name][$class], [$handler, $data]);
-        }
+        $this->name    = $name;
+        $this->handler = $handler;
+        $this->data    = $data;
+        $this->append  = $append;
+    }
+
+        /**
+     * Get the name of the event.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
-     * Removes an event handler for the specified event name.
+     * Set the name of the event.
      *
-     * @param string        $class   The class name.
-     * @param string        $name    The event name.
-     * @param callable|null $handler The event handler to be removed. If not provided, all event handlers for the specified event name will be removed.
+     * @param string $name The name to set.
      *
      * @return void
      */
-    public static function off($class, $name, $handler = null)
+    public function setName(string $name): void
     {
-        if (empty(self::$events[$name][$class])) {
-            return;
-        }
-
-        if ($handler === null) {
-            unset(self::$events[$name][$class]);
-        } else {
-            foreach (self::$events[$name][$class] as $i => $event) {
-                if ($event[0] === $handler) {
-                    unset(self::$events[$name][$class][$i]);
-                }
-            }
-        }
+        $this->name = $name;
     }
 
     /**
-     * Triggers an event.
+     * Get the sender of the event.
      *
-     * @param string $class The class name.
-     * @param string $name  The event name.
-     * @param mixed  $event An Event object or an event name.
+     * @return mixed
+     */
+    public function getSender()
+    {
+        return $this->sender;
+    }
+
+    /**
+     * Set the sender of the event.
+     *
+     * @param mixed $sender The sender to set.
      *
      * @return void
      */
-    public static function trigger($class, $name, mixed $event = null)
+    public function setSender(mixed $sender): void
     {
-        if (empty(self::$events[$name][$class])) {
-            return;
-        }
+        $this->sender = $sender;
+    }
 
-        if ($event === null) {
-            $event = new static();
-        } elseif (is_string($event)) {
-            $event = new static(['name' => $event]);
-        }
+    /**
+     * Get the handler of the event.
+     *
+     * @return callable
+     */
+    public function getHandler(): callable
+    {
+        return $this->handler;
+    }
 
-        $event->name = $name;
+    /**
+     * Set the handler of the event.
+     *
+     * @param callable $handler The handler to set.
+     *
+     * @return void
+     */
+    public function setHandler(callable $handler): void
+    {
+        $this->handler = $handler;
+    }
 
-        foreach (self::$events[$name][$class] as $handler) {
-            $event->data = $handler[1];
-            call_user_func($handler[0], $event);
-            if ($event->handled) {
-                return;
-            }
+    /**
+     * Get the data of the event.
+     *
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Set the data of the event.
+     *
+     * @param mixed $data The data to set.
+     *
+     * @return void
+     */
+    public function setData(mixed $data): void
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * Check if the handler should be appended.
+     *
+     * @return boolean
+     */
+    public function isAppend(): bool
+    {
+        return $this->append;
+    }
+
+    /**
+     * Set whether the handler should be appended.
+     *
+     * @param boolean $append
+     *
+     * @return void
+     */
+    public function setAppend(bool $append): void
+    {
+        $this->append = $append;
+    }
+
+    /**
+     * Trigger the event.
+     *
+     * @return void
+     * @throws \Exception if the event handler function call fails.
+     */
+    public function trigger()
+    {
+        if (false === call_user_func($this->handler, $this)) {
+            throw new \Exception('Event handler function call failed.');
         }
     }
 }

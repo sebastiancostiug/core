@@ -22,7 +22,7 @@ use database\RecordInterface;
 /**
  * Model class
  */
-class Model extends Component implements RecordInterface
+class Model extends Eventful implements RecordInterface
 {
     /**
      * Class events
@@ -110,6 +110,8 @@ class Model extends Component implements RecordInterface
      * @var array
      */
     protected array $changedAttributes = [];
+
+    private array $_observers = [];
 
     /**
      * Constructor for the Model class.
@@ -214,7 +216,7 @@ class Model extends Component implements RecordInterface
     public function afterFind()
     {
         $this->setOldAttributes();
-        $this->trigger(self::EVENT_AFTER_FIND);
+        $this->notify();
 
         return $this;
     }
@@ -235,7 +237,7 @@ class Model extends Component implements RecordInterface
             }
         }
 
-        $this->trigger(self::EVENT_BEFORE_VALIDATE);
+        $this->notify();
     }
 
     /**
@@ -257,7 +259,7 @@ class Model extends Component implements RecordInterface
 
         try {
             app()->validate($this->attributes, $rules, $filters)->isValid();
-            $this->trigger(self::EVENT_AFTER_VALIDATE);
+            $this->notify();
 
             return true;
         } catch (ModelException $e) {
@@ -279,10 +281,8 @@ class Model extends Component implements RecordInterface
     {
         if (!$this->isNewRecord()) {
             $this->setChangedAttributes();
-            $this->trigger(self::EVENT_BEFORE_UPDATE);
-        } else {
-            $this->trigger(self::EVENT_BEFORE_INSERT);
         }
+        $this->notify();
     }
 
     /**
@@ -295,11 +295,7 @@ class Model extends Component implements RecordInterface
      */
     public function afterSave($insert)
     {
-        if (!$this->isNewRecord()) {
-            $this->trigger(self::EVENT_AFTER_UPDATE);
-        } else {
-            $this->trigger(self::EVENT_AFTER_INSERT);
-        }
+        $this->notify();
     }
 
     /**
@@ -309,7 +305,7 @@ class Model extends Component implements RecordInterface
      */
     public function beforeDelete()
     {
-        $this->trigger(self::EVENT_BEFORE_DELETE);
+        $this->notify();
     }
 
     /**
@@ -319,7 +315,7 @@ class Model extends Component implements RecordInterface
      */
     public function afterDelete()
     {
-        $this->trigger(self::EVENT_AFTER_DELETE);
+        $this->notify();
     }
 
     /**
@@ -331,7 +327,7 @@ class Model extends Component implements RecordInterface
     {
         $record = new Record(static::class);
 
-        return  $record->find();
+        return $record->find();
     }
 
     /**

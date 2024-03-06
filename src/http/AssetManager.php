@@ -15,7 +15,7 @@
 
 namespace core\http;
 
-use core\components\Component;
+use common\Component;
 
 /**
  * AssetManager class

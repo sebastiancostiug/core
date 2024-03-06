@@ -26,7 +26,19 @@ use SplSubject;
  */
 class Eventful extends \common\Component implements SplSubject
 {
-    private $observers = [];
+    /**
+     * The private property that holds the observers for the Eventful component.
+     *
+     * @var array
+     */
+    private $_observers = [];
+
+    /**
+     * The private property that holds the event for the Eventful component.
+     *
+     * @var mixed
+     */
+    private $_event;
 
     /**
      * Attaches an observer to the subject.
@@ -49,7 +61,7 @@ class Eventful extends \common\Component implements SplSubject
      */
     public function detach(SplObserver $observer): void
     {
-        $this->_observers = array_filter($this->_observers, function($a) use ($observer) {
+        $this->_observers = array_filter($this->_observers, function ($a) use ($observer) {
             return $a !== $observer;
         });
     }
@@ -60,12 +72,28 @@ class Eventful extends \common\Component implements SplSubject
      * This method is responsible for triggering the event and notifying any registered listeners.
      * It does not return any value.
      *
+     * @param mixed $event The event to notify.
+     *
      * @return void
      */
-    public function notify(): void
+    public function notify(mixed $event = null): void
     {
+        $this->_event = $event;
+
         foreach ($this->_observers as $observer) {
             $observer->update($this);
         }
+    }
+
+    /**
+     * Returns the event.
+     *
+     * This method is responsible for returning the event.
+     *
+     * @return mixed
+     */
+    public function getEvent(): mixed
+    {
+        return $this->_event;
     }
 }

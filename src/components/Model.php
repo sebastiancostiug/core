@@ -216,7 +216,7 @@ class Model extends Eventful implements RecordInterface
     public function afterFind()
     {
         $this->setOldAttributes();
-        $this->notify();
+        $this->notify(self::EVENT_AFTER_FIND);
 
         return $this;
     }
@@ -237,7 +237,7 @@ class Model extends Eventful implements RecordInterface
             }
         }
 
-        $this->notify();
+        $this->notify(self::EVENT_BEFORE_VALIDATE);
     }
 
     /**
@@ -259,7 +259,7 @@ class Model extends Eventful implements RecordInterface
 
         try {
             app()->validate($this->attributes, $rules, $filters)->isValid();
-            $this->notify();
+            $this->notify(self::EVENT_AFTER_VALIDATE);
 
             return true;
         } catch (ModelException $e) {
@@ -281,8 +281,10 @@ class Model extends Eventful implements RecordInterface
     {
         if (!$this->isNewRecord()) {
             $this->setChangedAttributes();
+            $this->notify(self::EVENT_BEFORE_UPDATE);
+        } else {
+            $this->notify(self::EVENT_BEFORE_INSERT);
         }
-        $this->notify();
     }
 
     /**
@@ -295,7 +297,11 @@ class Model extends Eventful implements RecordInterface
      */
     public function afterSave($insert)
     {
-        $this->notify();
+        if (!$this->isNewRecord()) {
+            $this->notify(self::EVENT_AFTER_UPDATE);
+        } else {
+            $this->notify(self::EVENT_AFTER_INSERT);
+        }
     }
 
     /**
@@ -305,7 +311,7 @@ class Model extends Eventful implements RecordInterface
      */
     public function beforeDelete()
     {
-        $this->notify();
+        $this->notify(self::EVENT_BEFORE_DELETE);
     }
 
     /**
@@ -315,7 +321,7 @@ class Model extends Eventful implements RecordInterface
      */
     public function afterDelete()
     {
-        $this->notify();
+        $this->notify(self::EVENT_AFTER_DELETE);
     }
 
     /**

@@ -183,7 +183,7 @@ class Validator extends Component
                 }
                 switch ($filter) {
                     case 'trim':
-                        $this->data[$field] = $this->filters[$filter]($field, $condition);
+                        $this->data[$field] = $this->filters[$filter]($field, $condition ?? ' ');
                         break;
                     case 'stripTags':
                     case 'lowercase':

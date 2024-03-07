@@ -183,6 +183,22 @@ class Model extends Eventful implements RecordInterface
     }
 
     /**
+     * Checks if a property is set.
+     *
+     * This magic method is called when using the `isset()` function on an inaccessible property of the object.
+     *
+     * @param string $name The name of the property to check.
+     * @return boolean Returns `true` if the property is set, `false` otherwise.
+     */
+    public function __isset($name): bool
+    {
+        if (in_array($name, $this->attributeNames())) {
+            return isset($this->_attributes[$name]);
+        }
+        return parent::__isset($name);
+    }
+
+    /**
      * Get the model's table name
      *
      * @return string
@@ -465,7 +481,7 @@ class Model extends Eventful implements RecordInterface
         $this->beforeDelete();
 
         $record = new Record(static::class);
-        $record->setAttributes($this->attributes());
+        $record->setAttributes($this->getAttributes());
 
         if (!$record->delete()) {
             return false;
@@ -615,7 +631,7 @@ class Model extends Eventful implements RecordInterface
      */
     public function setChangedAttributes()
     {
-        $this->changedAttributes = array_intersect_assoc($this->attributes(), $this->oldAttributes);
+        $this->changedAttributes = array_intersect_assoc($this->getAttributes(), $this->oldAttributes);
     }
 
     /**

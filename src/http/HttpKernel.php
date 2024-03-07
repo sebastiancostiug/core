@@ -25,6 +25,7 @@ use core\bootstrap\LoadCsrf;
 use core\bootstrap\LoadSession;
 use core\bootstrap\Middleware;
 use core\bootstrap\ServiceProviders;
+use core\bootstrap\EnvironmentSettings;
 use core\http\middleware\RouteContextMiddleware;
 
 /**
@@ -57,6 +58,7 @@ class HttpKernel extends Kernel
         LoadSession::class,
         EnvironmentDetector::class,
         EnvironmentVariables::class,
+        EnvironmentSettings::class,
         Debug::class,
         LoadAliases::class,
         LoadCsrf::class,

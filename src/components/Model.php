@@ -111,8 +111,6 @@ class Model extends Eventful implements RecordInterface
      */
     protected array $changedAttributes = [];
 
-    private array $_observers = [];
-
     /**
      * Constructor for the Model class.
      *
@@ -122,8 +120,6 @@ class Model extends Eventful implements RecordInterface
      */
     public function __construct(array $attributes = [])
     {
-        parent::__construct();
-
         $this->setLabels($this->labels());
         $this->setRules($this->rules());
         $this->setFilters($this->filters());

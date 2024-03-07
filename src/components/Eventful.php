@@ -15,16 +15,13 @@
 
 namespace core\components;
 
-use SplObserver;
-use SplSubject;
-
 /**
  * Represents an Eventful component.
  *
  * This class extends the Component class and implements the SplSubject interface.
  * It can be used to create event-driven functionality.
  */
-class Eventful extends \common\Component implements SplSubject
+class Eventful extends \common\Component implements \SplSubject
 {
     /**
      * The private property that holds the observers for the Eventful component.
@@ -43,11 +40,11 @@ class Eventful extends \common\Component implements SplSubject
     /**
      * Attaches an observer to the subject.
      *
-     * @param SplObserver $observer The observer to attach.
+     * @param \SplObserver $observer The observer to attach.
      *
      * @return void
      */
-    public function attach(SplObserver $observer): void
+    public function attach(\SplObserver $observer): void
     {
         $this->_observers[] = $observer;
     }
@@ -55,11 +52,11 @@ class Eventful extends \common\Component implements SplSubject
     /**
      * Detaches an observer from the subject.
      *
-     * @param SplObserver $observer The observer to detach.
+     * @param \SplObserver $observer The observer to detach.
      *
      * @return void
      */
-    public function detach(SplObserver $observer): void
+    public function detach(\SplObserver $observer): void
     {
         $this->_observers = array_filter($this->_observers, function ($a) use ($observer) {
             return $a !== $observer;

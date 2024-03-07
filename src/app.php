@@ -17,20 +17,9 @@
 // Autoload global dependencies and allow for auto-loading local dependencies via use
 require_once dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . 'autoload.php';
 
-// Timezone
-date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
-
-if (dev_env()) {
-    // Development
-    error_reporting(E_ALL);
-    ini_set('display_errors', '1');
-    ini_set('display_startup_errors', '1');
-} else {
-    // Production
-    error_reporting(0);
-    ini_set('display_errors', '0');
-    ini_set('display_startup_errors', '0');
-}
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 
 // Create the application instance.
 $app = \core\foundation\AppFactory::create();

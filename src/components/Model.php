@@ -316,11 +316,11 @@ class Model extends Eventful implements RecordInterface
      */
     public function beforeSave($insert)
     {
-        if (!$this->isNewRecord()) {
+        if ($this->isNewRecord()) {
+            $this->notify(self::EVENT_BEFORE_INSERT);
+        } else {
             $this->setChangedAttributes();
             $this->notify(self::EVENT_BEFORE_UPDATE);
-        } else {
-            $this->notify(self::EVENT_BEFORE_INSERT);
         }
     }
 
@@ -328,17 +328,19 @@ class Model extends Eventful implements RecordInterface
      * This method is called after inserting a record.
      * Override this method to add custom logic after saving.
      *
-     * @param boolean $insert Insert
-     *
      * @return void
      */
-    public function afterSave($insert)
+    public function afterSave($return)
     {
-        if (!$this->isNewRecord()) {
-            $this->notify(self::EVENT_AFTER_UPDATE);
-        } else {
+        dwd($return);
+        if ($this->isNewRecord()) {
             $this->notify(self::EVENT_AFTER_INSERT);
+        } else {
+            $this->notify(self::EVENT_AFTER_UPDATE);
         }
+
+        dd($return);
+        return $return;
     }
 
     /**
@@ -489,11 +491,20 @@ class Model extends Eventful implements RecordInterface
         }
         $this->beforeSave($this->isNewRecord());
 
-        $id = $record->setAttributes($this->attributes)->save();
+        $attributes = $this->getChangedAttributes();
 
-        $this->afterSave($this->isNewRecord());
+        $return = false;
+        if (!empty($attributes)) {
+            if (!$this->isNewRecord()) {
+                $attributes += ['id' => $this->id];
+            }
 
-        return $id;
+            $return = $record->setAttributes($attributes)->save();
+        } else {
+            $return = $this->id;
+        }
+
+        return $this->afterSave($return);
     }
 
     /**
@@ -595,7 +606,7 @@ class Model extends Eventful implements RecordInterface
         $attributes = $this->attributeNames();
 
         foreach ($values as $name => $value) {
-            if (in_array($name, $attributes)) {
+            if (in_array($name, $attributes) && isset($value)) {
                 $this->$name = $value;
             }
         }
@@ -656,7 +667,7 @@ class Model extends Eventful implements RecordInterface
      */
     public function setChangedAttributes()
     {
-        $this->changedAttributes = array_intersect_assoc($this->getAttributes(), $this->oldAttributes);
+        $this->changedAttributes = array_diff_assoc($this->getAttributes(), $this->oldAttributes);
     }
 
     /**

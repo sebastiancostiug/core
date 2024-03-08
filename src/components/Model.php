@@ -21,6 +21,31 @@ use database\RecordInterface;
 
 /**
  * Model class
+ *
+ * Provides several attribute methods to handle the model's data:
+ * - attributeNames - returns an array of attribute names for the model that are the keys of the labels array and are used as class properties.
+ * - getAttributes - returns the model's attributes that correspond to the attributeNames and are used as class properties.
+ * - setAttributes - sets the model's attributes that correspond to the attributeNames and are used as class properties.
+ * - setPrivateAttributes - sets the private attributes of the model that are not accessible from outside the model.
+ * - getPublicAttributes - returns the public attributes of the model that are accessible from outside the model.
+ * - setOldAttributes - sets the old attributes of the model to be able to get the changedAttributes.
+ * - getChangedAttributes - returns the changed attributes of the model
+ * - setChangedAttributes - sets the changed attributes of the model
+ * - hasAttribute - checks if the model has an attribute with the specified name
+ *
+ * Provides several methods to interact with the database using the Record class:
+ * - find - returns a new instance of the Record class to perform database operations.
+ * - findBy - finds a record by a specific field and value.
+ * - findAllBy - finds all records by a specific field and value.
+ * - findOne - returns a single model instance.
+ * - findAll - returns all records of the model.
+ * - exists - checks if a record exists in the database based on a column and value.
+ * - save - saves the record to the database.
+ * - delete - deletes the record from the database.
+ * - hasOne - returns a single model instance related to the model.
+ * - hasMany - returns all related records of the model.
+ *
+ * {@inheritDoc}
  */
 class Model extends Eventful implements RecordInterface
 {

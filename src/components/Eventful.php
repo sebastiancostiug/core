@@ -18,8 +18,11 @@ namespace core\components;
 /**
  * Represents an Eventful component.
  *
- * This class extends the Component class and implements the SplSubject interface.
- * It can be used to create event-driven functionality.
+ * This class implements the SplSubject interface. It can be used to create event-driven functionality.
+ *
+ * {@inheritDoc}
+ * @see https://www.php.net/manual/en/class.splsubject.php
+ *
  */
 class Eventful extends \common\Component implements \SplSubject
 {

@@ -310,11 +310,9 @@ class Model extends Eventful implements RecordInterface
      * This method is called before inserting a record.
      * Override this method to add custom logic before saving.
      *
-     * @param boolean $insert Insert
-     *
      * @return void
      */
-    public function beforeSave($insert)
+    public function beforeSave()
     {
         if ($this->isNewRecord()) {
             $this->notify(self::EVENT_BEFORE_INSERT);
@@ -485,22 +483,23 @@ class Model extends Eventful implements RecordInterface
         if (!$this->validate()) {
             return false;
         }
-        $this->beforeSave($this->isNewRecord());
+        $this->beforeSave();
 
-        $attributes = $this->getChangedAttributes();
+        if ($this->isNewRecord()) {
+            $attributes = array_filter($this->getAttributes(), function ($value) {
+                return !empty($value);
+            });
+        } else {
+            $attributes = $this->getChangedAttributes() + ['id' => $this->id];
+        }
 
         if (!empty($attributes)) {
-            if (!$this->isNewRecord()) {
-                $attributes += ['id' => $this->id];
-            }
-
             $result = $record->setAttributes($attributes)->save();
-        } else {
-            $result = $this->id ?? $this->lastInsertId() ?? true;
-        }
-        $this->afterSave();
 
-        return $result;
+            $this->afterSave();
+        }
+
+        return $result ?? $this->id ?? true;
     }
 
     /**

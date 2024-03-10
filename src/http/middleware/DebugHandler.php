@@ -15,7 +15,6 @@
 
 namespace core\http\middleware;
 
-use app\components\Auth;
 use core\http\RequestInput;
 use core\http\View;
 use Nyholm\Psr7\ServerRequest as Request;
@@ -73,9 +72,30 @@ class DebugHandler
                 $payload['code']        = $exception->getCode();
                 $payload['file']        = $exception->getFile();
                 $payload['line']        = $exception->getLine();
-                $payload['previous']    = $exception->getPrevious();
-                $payload['debug']       = method_exists($exception, 'getErrors') ? $exception->getErrors() : [];
-                $payload['trace']       = $exception->getTrace();
+
+                // file context around the error line to help debugging
+                $fileContent = file($payload['file']);
+                // subtract 1 from the line number to get the array index
+                $errorLine = $payload['line'] - 1;
+                $startLine = max(0, $errorLine - 6);
+                $endLine = min(count($fileContent), $errorLine + 3);
+
+                $lines = array_slice($fileContent, $startLine, $endLine - $startLine + 1);
+                foreach ($lines as $i => $line) {
+                    $lineNumber = $startLine + $i + 1;
+                    $highlight = $lineNumber === $payload['line'] ? '>>> ' : '    ';
+                    // Replace spaces with non-breaking spaces to keep indentation in HTML
+                    $line = str_replace(' ', '&nbsp;', $line);
+                    $highlight = str_replace(' ', '&nbsp;', $highlight);
+                    // <br> tags are added to the end of each line to prevent the browser from collapsing them
+                    $lines[$i] = $highlight . $lineNumber . ': ' . $line . '<br/>';
+                }
+
+                // Add the file context to the payload as a single string
+                $payload['context']  = $lines;
+                $payload['previous'] = $exception->getPrevious();
+                $payload['debug']    = method_exists($exception, 'getErrors') ? $exception->getErrors() : [];
+                $payload['trace']    = $exception->getTrace();
             }
 
             if ($logErrors) {
@@ -114,7 +134,7 @@ class DebugHandler
             $view     = app()->resolve(View::class);
             $template = $view->randomPage('error/exception');
             if ($template) {
-                return $view($template, $payload, null)->withStatus(500);
+                return $view($template, $payload, 'blank')->withStatus(500);
             }
 
             return ($this->_defaultHandler)($request, $exception, $displayErrorDetails, $logErrors, $logErrorDetails);

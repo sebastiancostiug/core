@@ -330,17 +330,13 @@ class Model extends Eventful implements RecordInterface
      *
      * @return void
      */
-    public function afterSave($return)
+    public function afterSave()
     {
-        dwd($return);
         if ($this->isNewRecord()) {
             $this->notify(self::EVENT_AFTER_INSERT);
         } else {
             $this->notify(self::EVENT_AFTER_UPDATE);
         }
-
-        dd($return);
-        return $return;
     }
 
     /**
@@ -480,9 +476,9 @@ class Model extends Eventful implements RecordInterface
     /**
      * Save the record
      *
-     * @return integer|false The ID of the saved record, or false if the record failed to save.
+     * @return integer|boolean The ID of the inserted record or boolean on update and failure.
      */
-    public function save(): int|false
+    public function save(): int|bool
     {
         $record = new Record(static::class);
 
@@ -493,18 +489,18 @@ class Model extends Eventful implements RecordInterface
 
         $attributes = $this->getChangedAttributes();
 
-        $return = false;
         if (!empty($attributes)) {
             if (!$this->isNewRecord()) {
                 $attributes += ['id' => $this->id];
             }
 
-            $return = $record->setAttributes($attributes)->save();
+            $result = $record->setAttributes($attributes)->save();
         } else {
-            $return = $this->id;
+            $result = $this->id ?? $this->lastInsertId() ?? true;
         }
+        $this->afterSave();
 
-        return $this->afterSave($return);
+        return $result;
     }
 
     /**

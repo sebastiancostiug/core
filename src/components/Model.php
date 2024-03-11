@@ -475,7 +475,9 @@ class Model extends Eventful implements RecordInterface
         $records = $records->find();
 
         if (!empty($filter)) {
-            $records = $records->where($filter);
+            foreach ($filter as $type => $conditions) {
+                $records = $records->andWhere($conditions, $type);
+            }
         }
 
         if ($offset) {

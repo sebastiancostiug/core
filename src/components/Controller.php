@@ -33,4 +33,42 @@ class Controller extends Component
     {
         return null;
     }
+
+    /**
+     * Provides data for a given class and input.
+     *
+     * @param string  $class    The class name.
+     * @param array   $filter   The filter data.
+     * @param integer $pageSize The page size (default: 20).
+     * @param integer $page     The page number (default: 1).
+     * @param string  $orderBy  The order by field (default: 'created_at').
+     * @param string  $order    The order (default: 'DESC').
+     *
+     * @return array
+     */
+    protected function provide($class, array $filter, $pageSize = 20, $page = 1, $orderBy = 'created_at', $order = 'DESC')
+    {
+        if ($pageSize < 1) {
+            $pageSize = 20;
+        }
+
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        $filter       = $filter ?? [];
+        $offset       = ($page - 1) * $pageSize;
+        $totalEntries = $class::count();
+        $pages        = ceil($totalEntries / $pageSize);
+
+        if ($page > 1 && $page > $pages) {
+            $offset = ($pages - 1) * $pageSize;
+        }
+
+        return [
+            'entries'     => $class::getEntries($filter, $offset, $pageSize, $orderBy, $order),
+            'pages'       => $pages,
+            'currentPage' => $page,
+        ];
+    }
 }

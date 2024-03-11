@@ -459,20 +459,29 @@ class Model extends Eventful implements RecordInterface
     /**
      * Retrieves JUST the attributes saved in the database for all the models.
      *
-     * @param integer $offset The offset to start from.
-     * @param integer $count  The number of records to retrieve.
+     * @param array   $filter  The filter to apply to the records.
+     * @param integer $offset  The offset to start from.
+     * @param integer $count   The number of records to retrieve.
+     * @param string  $orderBy The column to order by.
+     * @param string  $sort    The order to use.
      *
      * @return array An array containing all the entries.
      */
-    public static function getEntries($offset = null, $count = null)
+    public static function getEntries(array $filter = [], $offset = null, $count = null, $orderBy = 'id', $sort = 'ASC')
     {
         $records = new Record(static::class);
 
         $records = $records->find();
 
+        if (!empty($filter)) {
+            $records = $records->where($filter);
+        }
+
         if ($offset) {
             $records = $records->offset($offset);
         }
+
+        $records = $records->orderBy($orderBy, $sort);
 
         if ($count) {
             $records = $records->limit($count);

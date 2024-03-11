@@ -457,6 +457,18 @@ class Model extends Eventful implements RecordInterface
     }
 
     /**
+     * Retrieves JUST the attributes saved in the database for all the models.
+     *
+     * @return array An array containing all the entries.
+     */
+    public static function getAllEntries()
+    {
+        return array_map(function ($entry) {
+            return $entry->getAttributes();
+        }, static::findAll());
+    }
+
+    /**
      * Check if a record exists in the database based on a column and value.
      *
      * @param string $column The column to search in.

@@ -462,8 +462,8 @@ class Model extends Eventful implements RecordInterface
      * @param array   $filter  The filter to apply to the records.
      * @param integer $offset  The offset to start from.
      * @param integer $count   The number of records to retrieve.
-     * @param string  $orderBy The column to order by.
-     * @param string  $sort    The order to use.
+     * @param string  $orderBy The column to order by  (default is 'id').
+     * @param string  $sort    The order to use (default is 'ASC').
      *
      * @return array An array containing all the entries.
      */

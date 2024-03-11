@@ -459,13 +459,26 @@ class Model extends Eventful implements RecordInterface
     /**
      * Retrieves JUST the attributes saved in the database for all the models.
      *
+     * @param integer $offset The offset to start from.
+     * @param integer $count  The number of records to retrieve.
+     *
      * @return array An array containing all the entries.
      */
-    public static function getAllEntries()
+    public static function getEntries($offset = null, $count = null)
     {
-        return array_map(function ($entry) {
-            return $entry->getAttributes();
-        }, static::findAll());
+        $records = new Record(static::class);
+
+        $records = $records->find();
+
+        if ($offset) {
+            $records = $records->offset($offset);
+        }
+
+        if ($count) {
+            $records = $records->limit($count);
+        }
+
+        return $records->all();
     }
 
     /**
@@ -481,6 +494,18 @@ class Model extends Eventful implements RecordInterface
         $record = new Record(static::class);
 
         return (bool) $record->find()->where([$column => $value])->one();
+    }
+
+    /**
+     * count the records
+     *
+     * @return integer
+     */
+    public static function count()
+    {
+        $record = new Record(static::class);
+
+        return $record->count();
     }
 
     /**

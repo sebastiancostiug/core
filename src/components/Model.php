@@ -32,9 +32,9 @@ use database\RecordInterface;
  * - getChangedAttributes - returns the changed attributes of the model
  * - setChangedAttributes - sets the changed attributes of the model
  * - hasAttribute - checks if the model has an attribute with the specified name
- * - getEntries - retrieves JUST the attributes saved in the database for filtered and ordered models.
  *
  * Provides several methods to interact with the database using the Record class:
+ * - getEntries - retrieves JUST the attributes saved in the database for filtered and ordered models.
  * - find - returns a new instance of the Record class to perform database operations.
  * - findBy - finds a record by a specific field and value.
  * - findAllBy - finds all records by a specific field and value.

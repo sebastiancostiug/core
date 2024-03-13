@@ -490,7 +490,16 @@ class Model extends Eventful implements RecordInterface
             $records = $records->offset($offset);
         }
 
-        return $records->all();
+        $records = $records->all();
+
+        $results = [];
+        foreach ($records as $data) {
+            $instance = new static();
+            $model = $instance->load($data)->afterFind();
+            $results[] = $model;
+        }
+
+        return $results;
     }
 
     /**

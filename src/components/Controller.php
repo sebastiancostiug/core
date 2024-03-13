@@ -65,8 +65,10 @@ class Controller extends Component
             $offset = ($pages - 1) * $pageSize;
         }
 
+        $records = $class::getEntries($filter, $offset, $pageSize, $orderBy, $order);
+
         return [
-            'entries'     => $class::getEntries($filter, $offset, $pageSize, $orderBy, $order),
+            'entries'     => $records,
             'pages'       => $pages,
             'currentPage' => $page,
         ];

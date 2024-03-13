@@ -480,14 +480,14 @@ class Model extends Eventful implements RecordInterface
             }
         }
 
-        if ($offset) {
-            $records = $records->offset($offset);
-        }
-
         $records = $records->orderBy($orderBy, $sort);
 
         if ($count) {
             $records = $records->limit($count);
+        }
+
+        if ($offset) {
+            $records = $records->offset($offset);
         }
 
         return $records->all();

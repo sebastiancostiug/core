@@ -47,6 +47,7 @@ class RequestInput
             'methods'   => $route->getMethods(),
             'arguments' => $route->getArguments(),
             'uri'       => $request->getUri(),
+            'referer'   => $request->getHeaderLine('referer') ?? '/',
         ];
 
         $this->attributes = $request->getParsedBody() ?? [];
@@ -190,5 +191,15 @@ class RequestInput
     public function getUri()
     {
         return data_get($this->metadata, 'uri');
+    }
+
+    /**
+     * Get the referer of the request.
+     *
+     * @return string|null The referer of the request, or null if not available.
+     */
+    public function getReferer()
+    {
+        return data_get($this->metadata, 'referer');
     }
 }

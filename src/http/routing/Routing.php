@@ -58,4 +58,46 @@ class Routing
             throw_when(true, [$th->getMessage()]);
         }
     }
+
+    /**
+     * Returns the referer of the request.
+     *
+     * @return string
+     */
+    public function referer(): string
+    {
+        $routeInput = app()->resolve(RequestInput::class);
+
+        return $routeInput->getReferer() ?? '/';
+    }
+
+    /**
+     * Redirects the user to the root page.
+     *
+     * @return mixed
+     * @throws \Throwable if an error occurs during the redirection process.
+     */
+    public function root()
+    {
+        try {
+            return $this->redirect('/');
+        } catch (\Throwable $th) {
+            throw_when(true, [$th->getMessage()]);
+        }
+    }
+
+    /**
+     * Redirects the user to the login page.
+     *
+     * @return mixed
+     * @throws \Throwable if an error occurs during the redirection process.
+     */
+    public function login()
+    {
+        try {
+            return $this->redirect('/account/login');
+        } catch (\Throwable $th) {
+            throw_when(true, [$th->getMessage()]);
+        }
+    }
 }

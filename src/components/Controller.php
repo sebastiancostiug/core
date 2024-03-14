@@ -43,10 +43,11 @@ class Controller extends Component
      * @param integer $page     The page number (default: 1).
      * @param string  $orderBy  The order by field (default: 'created_at').
      * @param string  $order    The order (default: 'DESC').
+     * @param boolean $objects  If true, the method will return and array of objects, otherwise it will return an array of arrays.
      *
      * @return array
      */
-    protected function provide($class, array $filter, $pageSize = 20, $page = 1, $orderBy = 'created_at', $order = 'DESC')
+    protected function provide($class, array $filter, $pageSize = 20, $page = 1, $orderBy = 'created_at', $order = 'DESC', $objects = false)
     {
         if ($pageSize < 1) {
             $pageSize = 20;
@@ -65,7 +66,11 @@ class Controller extends Component
             $offset = ($pages - 1) * $pageSize;
         }
 
-        $records = $class::getEntries($filter, $offset, $pageSize, $orderBy, $order);
+        if ($objects) {
+            $records = $class::getObjects($filter, $offset, $pageSize, $orderBy, $order);
+        } else {
+            $records = $class::getEntries($filter, $offset, $pageSize, $orderBy, $order);
+        }
 
         return [
             'entries'     => $records,

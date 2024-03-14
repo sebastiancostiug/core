@@ -490,7 +490,33 @@ class Model extends Eventful implements RecordInterface
             $records = $records->offset($offset);
         }
 
-        $records = $records->all();
+        return $records->all();
+
+        $results = [];
+        foreach ($records as $data) {
+            $instance = new static();
+            $model = $instance->load($data)->afterFind();
+            $results[] = $model;
+        }
+
+        return $results;
+    }
+
+    /**
+     * Retrieves objects from the database based on the provided filter.
+     *
+     * @param array        $filter  An array of filter conditions to apply.
+     * @param integer|null $offset  The number of records to skip before starting to retrieve objects.
+     * @param integer|null $count   The maximum number of objects to retrieve.
+     * @param string       $orderBy The column to order the objects by.
+     * @param string       $sort    The sort order (ASC or DESC).
+     *
+     *
+     * @return array An array of objects matching the filter conditions.
+     */
+    public static function getObjects(array $filter = [], $offset = null, $count = null, $orderBy = 'id', $sort = 'ASC')
+    {
+        $records = static::getEntries($filter, $offset, $count, $orderBy, $sort);
 
         $results = [];
         foreach ($records as $data) {
